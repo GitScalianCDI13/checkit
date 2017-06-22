@@ -16,7 +16,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Evaluation</h1>
+                    <h1 class="page-header"><:c:out value="${evaluation.evaluationLabel}"/></h1>
                     <p>
                         Bonjour <c:out value="${sessionScope.user.userFirstname}"/> <c:out value="${sessionScope.user.userLastname}"/>,
                         <br/>

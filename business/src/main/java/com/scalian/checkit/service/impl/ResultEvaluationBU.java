@@ -14,13 +14,19 @@ public class ResultEvaluationBU {
     public ResultEvaluationRepository resultEvaluationRepository;
 
     public ResultEvaluationEntity addNewResultEvaluation(Integer userId, Integer evaluationId){
+
         ResultEvaluationEntity resultEvaluationEntity = new ResultEvaluationEntity();
+
+        // Set user
         UserEntity userEntity = new UserEntity();
         userEntity.setUserId(userId);
         resultEvaluationEntity.setUser(userEntity);
+
+        // Set evaluation
         EvaluationEntity evaluationEntity = new EvaluationEntity();
         evaluationEntity.setEvaluationId(evaluationId);
         resultEvaluationEntity.setEvaluation(evaluationEntity);
+
         return resultEvaluationRepository.save(resultEvaluationEntity);
     }
 }

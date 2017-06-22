@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class EvaluationController {
@@ -21,7 +22,7 @@ public class EvaluationController {
     EvaluationBU evaluationBU;
 
 	@RequestMapping("/candidat/evaluation")
-	public String assessment(HttpServletRequest request, HttpSession session, ModelMap model) {
+	public String assesment(HttpServletRequest request, HttpSession session, ModelMap model) {
 
 	    // Récupération des infos de session
 	    UserBO user = (UserBO) session.getAttribute("user");
@@ -29,6 +30,13 @@ public class EvaluationController {
 
 	    // Récupération de l'évaluation
         EvaluationEntity evaluation  = evaluationBU.findOne(resultEvaluation.getEvaluation().getEvaluationId());
+
+        // Récupération des tests
+        List<TestEntity> tests = evaluation.getTests();
+
+        // Passage des données dans le ModelMap
+        model.addAttribute("evaluation", evaluation);
+        model.addAttribute("tests", tests);
 
 	    return "assesment";
 	}

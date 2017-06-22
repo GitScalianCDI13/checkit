@@ -27,7 +27,7 @@ public class EvaluationEntity implements Serializable {
 	private String evaluationLabel;
 
 	//bi-directional many-to-many association to TestEntity
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="evaluation_test"
 		, joinColumns={
@@ -99,5 +99,4 @@ public class EvaluationEntity implements Serializable {
 
 		return resultEvaluation;
 	}
-
 }
