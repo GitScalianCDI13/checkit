@@ -9,12 +9,13 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="user_response")
+@Table(name="user_response", schema = "public", catalog = "CheckUp")
 @NamedQuery(name="UserResponseEntity.findAll", query="SELECT u FROM UserResponseEntity u")
 public class UserResponseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="user_response_id")
 	private Integer userResponseId;
 

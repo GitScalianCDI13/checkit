@@ -22,10 +22,10 @@ public class SignupController {
     UserBU userBU;
     @Autowired
     ResultEvaluationBU resultEvaluationBU;
-	
+
 	@RequestMapping("/signup")
 	public String signup(HttpServletRequest request, ModelMap model) {
-		return "signup";
+	    return "signup";
 	}
 	
 	@RequestMapping("/subscribe")
@@ -55,7 +55,7 @@ public class SignupController {
 	        try {
 
                 // Add User
-                UserEntity user = userBU.addCandidat(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("email"));
+                UserBO user = userBU.addCandidat(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("email"));
 
                 // Init ResultEvaluation
                 ResultEvaluationEntity resultEvaluation = resultEvaluationBU.addNewResultEvaluation(user.getUserId(), 1);

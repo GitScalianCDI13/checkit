@@ -10,12 +10,13 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="test_result")
+@Table(name="test_result", schema = "public", catalog = "CheckUp")
 @NamedQuery(name="TestResultEntity.findAll", query="SELECT t FROM TestResultEntity t")
 public class TestResultEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="test_result_id")
 	private Integer testResultId;
 

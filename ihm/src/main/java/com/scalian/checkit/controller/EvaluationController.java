@@ -5,6 +5,7 @@ import com.scalian.checkit.model.ResultEvaluationEntity;
 import com.scalian.checkit.model.TestEntity;
 import com.scalian.checkit.model.UserEntity;
 import com.scalian.checkit.service.impl.EvaluationBU;
+import com.scalian.checkit.service.model.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,13 +24,11 @@ public class EvaluationController {
 	public String assessment(HttpServletRequest request, HttpSession session, ModelMap model) {
 
 	    // Récupération des infos de session
-	    UserEntity user = (UserEntity) session.getAttribute("user");
+	    UserBO user = (UserBO) session.getAttribute("user");
 	    ResultEvaluationEntity resultEvaluation = (ResultEvaluationEntity) session.getAttribute("resultEvaluation");
 
 	    // Récupération de l'évaluation
         EvaluationEntity evaluation  = evaluationBU.findOne(resultEvaluation.getEvaluation().getEvaluationId());
-
-        System.out.print(evaluation.getEvaluationLabel());
 
 	    return "assesment";
 	}

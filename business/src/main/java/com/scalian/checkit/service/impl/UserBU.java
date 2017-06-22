@@ -1,8 +1,5 @@
 package com.scalian.checkit.service.impl;
 
-//import UserEntity;
-//import UserRepository;
-//import org.springframework.beans.factory.annotation.Autowired;
 import com.scalian.checkit.model.RoleEntity;
 import com.scalian.checkit.model.UserEntity;
 import com.scalian.checkit.repository.UserRepository;
@@ -17,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserBU implements ICRUD<UserBO>, IUser {
+public class UserBU implements ICRUD<UserBO>, IUser{
 
     @Autowired
     public UserRepository userRepository;
@@ -28,8 +25,15 @@ public class UserBU implements ICRUD<UserBO>, IUser {
     }
 
     @Override
-    public List<UserBO> findAll() {
-        return null;
+    public List<UserBO> findAll(){
+        Iterable<UserEntity> data = userRepository.findAll();
+
+        List<UserBO> users = new ArrayList<>();
+
+        for(UserEntity userEntity: data){
+            users.add(UserMapping.mapUserEntityToBO(userEntity));
+        }
+        return users;
     }
 
     @Override
@@ -55,8 +59,6 @@ public class UserBU implements ICRUD<UserBO>, IUser {
     @Override
     public List<UserBO> findByUserEmail(String userEmail){
 
-        UserEntity user = userRepository.findOne(16);
-
         List<UserEntity> data = userRepository.findByUserEmail(userEmail);
 
         List<UserBO> users = new ArrayList<>();
@@ -67,7 +69,7 @@ public class UserBU implements ICRUD<UserBO>, IUser {
         return users;
     }
 
-    public UserEntity addCandidat(String userLastname, String userFirstname, String userEmail){
+    public UserBO addCandidat(String userLastname, String userFirstname, String userEmail){
 
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setRoleId(3);
@@ -79,6 +81,8 @@ public class UserBU implements ICRUD<UserBO>, IUser {
         userEntity.setUserEmail(userEmail);
         userEntity.setUserPassword("test");
 
-        return userRepository.save(userEntity);
+        UserBO userBO = UserMapping.mapUserEntityToBO(userRepository.save(userEntity));
+
+        return userBO;
     }
 }
