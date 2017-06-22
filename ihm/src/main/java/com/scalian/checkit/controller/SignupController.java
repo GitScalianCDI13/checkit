@@ -4,6 +4,7 @@ import com.scalian.checkit.model.ResultEvaluationEntity;
 import com.scalian.checkit.model.UserEntity;
 import com.scalian.checkit.service.impl.ResultEvaluationBU;
 import com.scalian.checkit.service.impl.UserBU;
+import com.scalian.checkit.service.model.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,7 +32,7 @@ public class SignupController {
 	public String subscribe(HttpServletRequest request, HttpSession session, ModelMap model, RedirectAttributes redirectAttrs) {
 
 	    // Get list of users with same email
-	    List<UserEntity> usersList = userBU.findByUserEmail(request.getParameter("email"));
+	    List<UserBO> usersList = userBU.findByUserEmail(request.getParameter("email"));
 
 	    // If exists a user with this email
 	    if(usersList.size() > 0){
@@ -54,7 +55,7 @@ public class SignupController {
 	        try {
 
                 // Add User
-                UserEntity user = userBU.addNewCandidat(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("email"));
+                UserEntity user = userBU.addCandidat(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("email"));
 
                 // Init ResultEvaluation
                 ResultEvaluationEntity resultEvaluation = resultEvaluationBU.addNewResultEvaluation(user.getUserId(), 1);

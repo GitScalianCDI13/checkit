@@ -16,7 +16,6 @@ public class TestController {
 
     @RequestMapping("/test/list")
     public String list(HttpServletRequest request, ModelMap model) {
-        System.out.println(testBU.findAll());
         model.addAttribute("list", testBU.findAll());
         return "test_list";
     }

@@ -1,124 +1,84 @@
 package com.scalian.checkit.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
+
+/**
+ * The persistent class for the user_response database table.
+ * 
+ */
 @Entity
-@Table(name = "user_response", schema = "public", catalog = "CheckUp")
-public class UserResponseEntity {
-    @Id
-    @Column(name = "user_response_id", nullable = false)
-    private int userResponseId;
+@Table(name="user_response")
+@NamedQuery(name="UserResponseEntity.findAll", query="SELECT u FROM UserResponseEntity u")
+public class UserResponseEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Basic
-    @Column(name = "possible_response_id", nullable = false)
-    private int possibleResponseId;
+	@Id
+	@Column(name="user_response_id")
+	private Integer userResponseId;
 
-    @Basic
-    @Column(name = "question_id", nullable = false)
-    private int questionId;
+	//bi-directional many-to-one association to PossibleResponseEntity
+	@ManyToOne
+	@JoinColumn(name="possible_response_id")
+	private PossibleResponseEntity possibleResponse;
 
-    @Basic
-    @Column(name = "user_id", nullable = false)
-    private int userId;
+	//bi-directional many-to-one association to QuestionEntity
+	@ManyToOne
+	@JoinColumn(name="question_id")
+	private QuestionEntity question;
 
-    @Basic
-    @Column(name = "test_result_id", nullable = false)
-    private int testResultId;
+	//bi-directional many-to-one association to TestResultEntity
+	@ManyToOne
+	@JoinColumn(name="test_result_id")
+	private TestResultEntity testResult;
 
-    public int getUserResponseId() {
-        return userResponseId;
-    }
-    public void setUserResponseId(int userResponseId) {
-        this.userResponseId = userResponseId;
-    }
-    public int getPossibleResponseId() {
-        return possibleResponseId;
-    }
-    public void setPossibleResponseId(int possibleResponseId) {
-        this.possibleResponseId = possibleResponseId;
-    }
-    public int getQuestionId() {
-        return questionId;
-    }
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
-    public int getUserId() {
-        return userId;
-    }
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-    public int getTestResultId() {
-        return testResultId;
-    }
-    public void setTestResultId(int testResultId) {
-        this.testResultId = testResultId;
-    }
+	//bi-directional many-to-one association to UserEntity
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private UserEntity user;
 
-//    @ManyToOne
-//    @JoinColumn(name = "possible_response_id", referencedColumnName = "possible_response_id", nullable = false)
-//    private PossibleResponseEntity possibleResponseByPossibleResponseId;
-//    public PossibleResponseEntity getPossibleResponseByPossibleResponseId() {
-//        return possibleResponseByPossibleResponseId;
-//    }
-//    public void setPossibleResponseByPossibleResponseId(PossibleResponseEntity possibleResponseByPossibleResponseId) {
-//        this.possibleResponseByPossibleResponseId = possibleResponseByPossibleResponseId;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "question_id", referencedColumnName = "question_id", nullable = false)
-//    private QuestionEntity questionByQuestionId;
-//    public QuestionEntity getQuestionByQuestionId() {
-//        return questionByQuestionId;
-//    }
-//    public void setQuestionByQuestionId(QuestionEntity questionByQuestionId) {
-//        this.questionByQuestionId = questionByQuestionId;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-//    private UserEntity userByUserId;
-//    public UserEntity getUserByUserId() {
-//        return userByUserId;
-//    }
-//    public void setUserByUserId(UserEntity userByUserId) {
-//        this.userByUserId = userByUserId;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "test_result_id", referencedColumnName = "test_result_id", nullable = false)
-//    private TestResultEntity testResultByTestResultId;
-//    public TestResultEntity getTestResultByTestResultId() {
-//        return testResultByTestResultId;
-//    }
-//    public void setTestResultByTestResultId(TestResultEntity testResultByTestResultId) {
-//        this.testResultByTestResultId = testResultByTestResultId;
-//    }
+	public UserResponseEntity() {
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public Integer getUserResponseId() {
+		return this.userResponseId;
+	}
 
-        UserResponseEntity that = (UserResponseEntity) o;
+	public void setUserResponseId(Integer userResponseId) {
+		this.userResponseId = userResponseId;
+	}
 
-        if (userResponseId != that.userResponseId) return false;
-        if (possibleResponseId != that.possibleResponseId) return false;
-        if (questionId != that.questionId) return false;
-        if (userId != that.userId) return false;
-        if (testResultId != that.testResultId) return false;
+	public PossibleResponseEntity getPossibleResponse() {
+		return this.possibleResponse;
+	}
 
-        return true;
-    }
+	public void setPossibleResponse(PossibleResponseEntity possibleResponse) {
+		this.possibleResponse = possibleResponse;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = userResponseId;
-        result = 31 * result + possibleResponseId;
-        result = 31 * result + questionId;
-        result = 31 * result + userId;
-        result = 31 * result + testResultId;
-        return result;
-    }
+	public QuestionEntity getQuestion() {
+		return this.question;
+	}
+
+	public void setQuestion(QuestionEntity question) {
+		this.question = question;
+	}
+
+	public TestResultEntity getTestResult() {
+		return this.testResult;
+	}
+
+	public void setTestResult(TestResultEntity testResult) {
+		this.testResult = testResult;
+	}
+
+	public UserEntity getUser() {
+		return this.user;
+	}
+
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+
 }

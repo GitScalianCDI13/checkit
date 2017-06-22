@@ -1,98 +1,116 @@
 package com.scalian.checkit.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
+/**
+ * The persistent class for the test database table.
+ * 
+ */
 @Entity
-@Table(name = "test", schema = "public", catalog = "CheckUp")
-public class TestEntity {
-    @Id
-    @Column(name = "test_id", nullable = false)
-    private int testId;
+@Table(name="test")
+@NamedQuery(name="TestEntity.findAll", query="SELECT t FROM TestEntity t")
+public class TestEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Basic
-    @Column(name = "test_label", nullable = false, length = 255)
-    private String testLabel;
+	@Id
+	@Column(name="test_id")
+	private Integer testId;
 
-    @Basic
-    @Column(name = "theme_id", nullable = false)
-    private int themeId;
+	@Column(name="test_label")
+	private String testLabel;
 
-    public int getTestId() {
-        return testId;
-    }
-    public void setTestId(int testId) {
-        this.testId = testId;
-    }
-    public String getTestLabel() {
-        return testLabel;
-    }
-    public void setTestLabel(String testLabel) {
-        this.testLabel = testLabel;
-    }
-    public int getThemeId() {
-        return themeId;
-    }
-    public void setThemeId(int themeId) {
-        this.themeId = themeId;
-    }
+	//bi-directional many-to-many association to EvaluationEntity
+	@ManyToMany(mappedBy="tests")
+	private List<EvaluationEntity> evaluations;
 
-//    @OneToMany(mappedBy = "testByTestId")
-//    private Collection<EvaluationTestEntity> evaluationTestsByTestId;
-//    public Collection<EvaluationTestEntity> getEvaluationTestsByTestId() {
-//        return evaluationTestsByTestId;
-//    }
-//    public void setEvaluationTestsByTestId(Collection<EvaluationTestEntity> evaluationTestsByTestId) {
-//        this.evaluationTestsByTestId = evaluationTestsByTestId;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "theme_id", referencedColumnName = "theme_id", nullable = false)
-//    private ThemeEntity themeByThemeId;
-//    public ThemeEntity getThemeByThemeId() {
-//        return themeByThemeId;
-//    }
-//    public void setThemeByThemeId(ThemeEntity themeByThemeId) {
-//        this.themeByThemeId = themeByThemeId;
-//    }
-//
-//    @OneToMany(mappedBy = "testByTestId")
-//    private Collection<TestQuestionEntity> testQuestionsByTestId;
-//    public Collection<TestQuestionEntity> getTestQuestionsByTestId() {
-//        return testQuestionsByTestId;
-//    }
-//    public void setTestQuestionsByTestId(Collection<TestQuestionEntity> testQuestionsByTestId) {
-//        this.testQuestionsByTestId = testQuestionsByTestId;
-//    }
-//
-//    @OneToMany(mappedBy = "testByTestId")
-//    private Collection<TestResultEntity> testResultsByTestId;
-//    public Collection<TestResultEntity> getTestResultsByTestId() {
-//        return testResultsByTestId;
-//    }
-//    public void setTestResultsByTestId(Collection<TestResultEntity> testResultsByTestId) {
-//        this.testResultsByTestId = testResultsByTestId;
-//    }
+	//bi-directional many-to-many association to QuestionEntity
+	@ManyToMany
+	@JoinTable(
+		name="test_question"
+		, joinColumns={
+			@JoinColumn(name="test_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="question_id")
+			}
+		)
+	private List<QuestionEntity> questions;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	//bi-directional many-to-one association to ThemeEntity
+	@ManyToOne
+	@JoinColumn(name="theme_id")
+	private ThemeEntity theme;
 
-        TestEntity that = (TestEntity) o;
+	//bi-directional many-to-one association to TestResultEntity
+	@OneToMany(mappedBy="test")
+	private List<TestResultEntity> testResults;
 
-        if (testId != that.testId) return false;
-        if (themeId != that.themeId) return false;
-        if (testLabel != null ? !testLabel.equals(that.testLabel) : that.testLabel != null) return false;
+	public TestEntity() {
+	}
 
-        return true;
-    }
+	public Integer getTestId() {
+		return this.testId;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = testId;
-        result = 31 * result + (testLabel != null ? testLabel.hashCode() : 0);
-        result = 31 * result + themeId;
-        return result;
-    }
+	public void setTestId(Integer testId) {
+		this.testId = testId;
+	}
+
+	public String getTestLabel() {
+		return this.testLabel;
+	}
+
+	public void setTestLabel(String testLabel) {
+		this.testLabel = testLabel;
+	}
+
+	public List<EvaluationEntity> getEvaluations() {
+		return this.evaluations;
+	}
+
+	public void setEvaluations(List<EvaluationEntity> evaluations) {
+		this.evaluations = evaluations;
+	}
+
+	public List<QuestionEntity> getQuestions() {
+		return this.questions;
+	}
+
+	public void setQuestions(List<QuestionEntity> questions) {
+		this.questions = questions;
+	}
+
+	public ThemeEntity getTheme() {
+		return this.theme;
+	}
+
+	public void setTheme(ThemeEntity theme) {
+		this.theme = theme;
+	}
+
+	public List<TestResultEntity> getTestResults() {
+		return this.testResults;
+	}
+
+	public void setTestResults(List<TestResultEntity> testResults) {
+		this.testResults = testResults;
+	}
+
+	public TestResultEntity addTestResult(TestResultEntity testResult) {
+		getTestResults().add(testResult);
+		testResult.setTest(this);
+
+		return testResult;
+	}
+
+	public TestResultEntity removeTestResult(TestResultEntity testResult) {
+		getTestResults().remove(testResult);
+		testResult.setTest(null);
+
+		return testResult;
+	}
+
 }

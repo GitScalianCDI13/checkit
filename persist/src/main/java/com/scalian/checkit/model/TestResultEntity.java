@@ -1,115 +1,107 @@
 package com.scalian.checkit.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the test_result database table.
+ * 
+ */
 @Entity
-@Table(name = "test_result", schema = "public", catalog = "CheckUp")
-public class TestResultEntity {
-    @Id
-    @Column(name = "test_result_id", nullable = false)
-    private int testResultId;
+@Table(name="test_result")
+@NamedQuery(name="TestResultEntity.findAll", query="SELECT t FROM TestResultEntity t")
+public class TestResultEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Basic
-    @Column(name = "test_result_score", nullable = true)
-    private Integer testResultScore;
+	@Id
+	@Column(name="test_result_id")
+	private Integer testResultId;
 
-    @Basic
-    @Column(name = "test_result_time", nullable = true)
-    private Integer testResultTime;
+	@Column(name="test_result_score")
+	private Integer testResultScore;
 
-    @Basic
-    @Column(name = "test_id", nullable = false)
-    private int testId;
+	@Column(name="test_result_time")
+	private Integer testResultTime;
 
-    @Basic
-    @Column(name = "result_evaluation_id", nullable = false)
-    private int resultEvaluationId;
+	//bi-directional many-to-one association to ResultEvaluationEntity
+	@ManyToOne
+	@JoinColumn(name="result_evaluation_id")
+	private ResultEvaluationEntity resultEvaluation;
 
-    public int getTestResultId() {
-        return testResultId;
-    }
-    public void setTestResultId(int testResultId) {
-        this.testResultId = testResultId;
-    }
-    public Integer getTestResultScore() {
-        return testResultScore;
-    }
-    public void setTestResultScore(Integer testResultScore) {
-        this.testResultScore = testResultScore;
-    }
-    public Integer getTestResultTime() {
-        return testResultTime;
-    }
-    public void setTestResultTime(Integer testResultTime) {
-        this.testResultTime = testResultTime;
-    }
-    public int getTestId() {
-        return testId;
-    }
-    public void setTestId(int testId) {
-        this.testId = testId;
-    }
-    public int getResultEvaluationId() {
-        return resultEvaluationId;
-    }
-    public void setResultEvaluationId(int resultEvaluationId) {
-        this.resultEvaluationId = resultEvaluationId;
-    }
+	//bi-directional many-to-one association to TestEntity
+	@ManyToOne
+	@JoinColumn(name="test_id")
+	private TestEntity test;
 
-//    @ManyToOne
-//    @JoinColumn(name = "test_id", referencedColumnName = "test_id", nullable = false)
-//    private TestEntity testByTestId;
-//    public TestEntity getTestByTestId() {
-//        return testByTestId;
-//    }
-//    public void setTestByTestId(TestEntity testByTestId) {
-//        this.testByTestId = testByTestId;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "result_evaluation_id", referencedColumnName = "result_evaluation_id", nullable = false)
-//    private ResultEvaluationEntity resultEvaluationByResultEvaluationId;
-//    public ResultEvaluationEntity getResultEvaluationByResultEvaluationId() {
-//        return resultEvaluationByResultEvaluationId;
-//    }
-//    public void setResultEvaluationByResultEvaluationId(ResultEvaluationEntity resultEvaluationByResultEvaluationId) {
-//        this.resultEvaluationByResultEvaluationId = resultEvaluationByResultEvaluationId;
-//    }
-//
-//    @OneToMany(mappedBy = "testResultByTestResultId")
-//    private Collection<UserResponseEntity> userResponsesByTestResultId;
-//    public Collection<UserResponseEntity> getUserResponsesByTestResultId() {
-//        return userResponsesByTestResultId;
-//    }
-//    public void setUserResponsesByTestResultId(Collection<UserResponseEntity> userResponsesByTestResultId) {
-//        this.userResponsesByTestResultId = userResponsesByTestResultId;
-//    }
+	//bi-directional many-to-one association to UserResponseEntity
+	@OneToMany(mappedBy="testResult")
+	private List<UserResponseEntity> userResponses;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public TestResultEntity() {
+	}
 
-        TestResultEntity that = (TestResultEntity) o;
+	public Integer getTestResultId() {
+		return this.testResultId;
+	}
 
-        if (testResultId != that.testResultId) return false;
-        if (testId != that.testId) return false;
-        if (resultEvaluationId != that.resultEvaluationId) return false;
-        if (testResultScore != null ? !testResultScore.equals(that.testResultScore) : that.testResultScore != null)
-            return false;
-        if (testResultTime != null ? !testResultTime.equals(that.testResultTime) : that.testResultTime != null)
-            return false;
+	public void setTestResultId(Integer testResultId) {
+		this.testResultId = testResultId;
+	}
 
-        return true;
-    }
+	public Integer getTestResultScore() {
+		return this.testResultScore;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = testResultId;
-        result = 31 * result + (testResultScore != null ? testResultScore.hashCode() : 0);
-        result = 31 * result + (testResultTime != null ? testResultTime.hashCode() : 0);
-        result = 31 * result + testId;
-        result = 31 * result + resultEvaluationId;
-        return result;
-    }
+	public void setTestResultScore(Integer testResultScore) {
+		this.testResultScore = testResultScore;
+	}
+
+	public Integer getTestResultTime() {
+		return this.testResultTime;
+	}
+
+	public void setTestResultTime(Integer testResultTime) {
+		this.testResultTime = testResultTime;
+	}
+
+	public ResultEvaluationEntity getResultEvaluation() {
+		return this.resultEvaluation;
+	}
+
+	public void setResultEvaluation(ResultEvaluationEntity resultEvaluation) {
+		this.resultEvaluation = resultEvaluation;
+	}
+
+	public TestEntity getTest() {
+		return this.test;
+	}
+
+	public void setTest(TestEntity test) {
+		this.test = test;
+	}
+
+	public List<UserResponseEntity> getUserResponses() {
+		return this.userResponses;
+	}
+
+	public void setUserResponses(List<UserResponseEntity> userResponses) {
+		this.userResponses = userResponses;
+	}
+
+	public UserResponseEntity addUserRespons(UserResponseEntity userRespons) {
+		getUserResponses().add(userRespons);
+		userRespons.setTestResult(this);
+
+		return userRespons;
+	}
+
+	public UserResponseEntity removeUserRespons(UserResponseEntity userRespons) {
+		getUserResponses().remove(userRespons);
+		userRespons.setTestResult(null);
+
+		return userRespons;
+	}
+
 }

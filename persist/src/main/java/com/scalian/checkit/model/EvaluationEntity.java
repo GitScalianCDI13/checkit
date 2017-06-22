@@ -1,81 +1,102 @@
 package com.scalian.checkit.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
+
+/**
+ * The persistent class for the evaluation database table.
+ * 
+ */
 @Entity
-@Table(name = "evaluation", schema = "public", catalog = "CheckUp")
-public class EvaluationEntity {
-    @Id
-    @Column(name = "evaluation_id", nullable = false)
-    private int evaluationId;
+@Table(name="evaluation")
+@NamedQuery(name="EvaluationEntity.findAll", query="SELECT e FROM EvaluationEntity e")
+public class EvaluationEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Basic
-    @Column(name = "evaluation_label", nullable = false, length = 255)
-    private String evaluationLabel;
+	@Id
+	@Column(name="evaluation_id")
+	private Integer evaluationId;
 
-    @Basic
-    @Column(name = "evaluation_job", nullable = true, length = 255)
-    private String evaluationJob;
+	@Column(name="evaluation_job")
+	private String evaluationJob;
 
-    public int getEvaluationId() {
-        return evaluationId;
-    }
-    public void setEvaluationId(int evaluationId) {
-        this.evaluationId = evaluationId;
-    }
-    public String getEvaluationLabel() {
-        return evaluationLabel;
-    }
-    public void setEvaluationLabel(String evaluationLabel) {
-        this.evaluationLabel = evaluationLabel;
-    }
-    public String getEvaluationJob() {
-        return evaluationJob;
-    }
-    public void setEvaluationJob(String evaluationJob) {
-        this.evaluationJob = evaluationJob;
-    }
+	@Column(name="evaluation_label")
+	private String evaluationLabel;
 
-//    @OneToMany(mappedBy = "evaluationByEvaluationId")
-//    private Collection<EvaluationTestEntity> evaluationTestsByEvaluationId;
-//    public Collection<EvaluationTestEntity> getEvaluationTestsByEvaluationId() {
-//        return evaluationTestsByEvaluationId;
-//    }
-//    public void setEvaluationTestsByEvaluationId(Collection<EvaluationTestEntity> evaluationTestsByEvaluationId) {
-//        this.evaluationTestsByEvaluationId = evaluationTestsByEvaluationId;
-//    }
-//
-//    @OneToMany(mappedBy = "evaluationByEvaluationId")
-//    private Collection<ResultEvaluationEntity> resultEvaluationsByEvaluationId;
-//    public Collection<ResultEvaluationEntity> getResultEvaluationsByEvaluationId() {
-//        return resultEvaluationsByEvaluationId;
-//    }
-//    public void setResultEvaluationsByEvaluationId(Collection<ResultEvaluationEntity> resultEvaluationsByEvaluationId) {
-//        this.resultEvaluationsByEvaluationId = resultEvaluationsByEvaluationId;
-//    }
+	//bi-directional many-to-many association to TestEntity
+	@ManyToMany
+	@JoinTable(
+		name="evaluation_test"
+		, joinColumns={
+			@JoinColumn(name="evaluation_id")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="test_id")
+			}
+		)
+	private List<TestEntity> tests;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	//bi-directional many-to-one association to ResultEvaluationEntity
+	@OneToMany(mappedBy="evaluation")
+	private List<ResultEvaluationEntity> resultEvaluations;
 
-        EvaluationEntity that = (EvaluationEntity) o;
+	public EvaluationEntity() {
+	}
 
-        if (evaluationId != that.evaluationId) return false;
-        if (evaluationLabel != null ? !evaluationLabel.equals(that.evaluationLabel) : that.evaluationLabel != null)
-            return false;
-        if (evaluationJob != null ? !evaluationJob.equals(that.evaluationJob) : that.evaluationJob != null)
-            return false;
+	public Integer getEvaluationId() {
+		return this.evaluationId;
+	}
 
-        return true;
-    }
+	public void setEvaluationId(Integer evaluationId) {
+		this.evaluationId = evaluationId;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = evaluationId;
-        result = 31 * result + (evaluationLabel != null ? evaluationLabel.hashCode() : 0);
-        result = 31 * result + (evaluationJob != null ? evaluationJob.hashCode() : 0);
-        return result;
-    }
+	public String getEvaluationJob() {
+		return this.evaluationJob;
+	}
+
+	public void setEvaluationJob(String evaluationJob) {
+		this.evaluationJob = evaluationJob;
+	}
+
+	public String getEvaluationLabel() {
+		return this.evaluationLabel;
+	}
+
+	public void setEvaluationLabel(String evaluationLabel) {
+		this.evaluationLabel = evaluationLabel;
+	}
+
+	public List<TestEntity> getTests() {
+		return this.tests;
+	}
+
+	public void setTests(List<TestEntity> tests) {
+		this.tests = tests;
+	}
+
+	public List<ResultEvaluationEntity> getResultEvaluations() {
+		return this.resultEvaluations;
+	}
+
+	public void setResultEvaluations(List<ResultEvaluationEntity> resultEvaluations) {
+		this.resultEvaluations = resultEvaluations;
+	}
+
+	public ResultEvaluationEntity addResultEvaluation(ResultEvaluationEntity resultEvaluation) {
+		getResultEvaluations().add(resultEvaluation);
+		resultEvaluation.setEvaluation(this);
+
+		return resultEvaluation;
+	}
+
+	public ResultEvaluationEntity removeResultEvaluation(ResultEvaluationEntity resultEvaluation) {
+		getResultEvaluations().remove(resultEvaluation);
+		resultEvaluation.setEvaluation(null);
+
+		return resultEvaluation;
+	}
+
 }

@@ -1,92 +1,94 @@
 package com.scalian.checkit.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the possible_response database table.
+ * 
+ */
 @Entity
-@Table(name ="possible_response", schema = "public", catalog = "CheckUp")
-public class PossibleResponseEntity {
-    @Id
-    @Column(name = "possible_response_id", nullable = false)
-    private int possibleResponseId;
+@Table(name="possible_response")
+@NamedQuery(name="PossibleResponseEntity.findAll", query="SELECT p FROM PossibleResponseEntity p")
+public class PossibleResponseEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Basic
-    @Column(name = "possible_response_label", nullable = false, length = 255)
-    private String possibleResponseLabel;
+	@Id
+	@Column(name="possible_response_id")
+	private Integer possibleResponseId;
 
-    @Basic
-    @Column(name = "possible_response_checked", nullable = false)
-    private boolean possibleResponseChecked;
+	@Column(name="possible_response_checked")
+	private Boolean possibleResponseChecked;
 
-    @Basic
-    @Column(name = "question_id", nullable = false)
-    private int questionId;
+	@Column(name="possible_response_label")
+	private String possibleResponseLabel;
 
-    public int getPossibleResponseId() {
-        return possibleResponseId;
-    }
-    public void setPossibleResponseId(int possibleResponseId) {
-        this.possibleResponseId = possibleResponseId;
-    }
-    public String getPossibleResponseLabel() {
-        return possibleResponseLabel;
-    }
-    public void setPossibleResponseLabel(String possibleResponseLabel) {
-        this.possibleResponseLabel = possibleResponseLabel;
-    }
-    public boolean isPossibleResponseChecked() {
-        return possibleResponseChecked;
-    }
-    public void setPossibleResponseChecked(boolean possibleResponseChecked) {
-        this.possibleResponseChecked = possibleResponseChecked;
-    }
-    public int getQuestionId() {
-        return questionId;
-    }
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
+	//bi-directional many-to-one association to QuestionEntity
+	@ManyToOne
+	@JoinColumn(name="question_id")
+	private QuestionEntity question;
 
-//    @ManyToOne
-//    @JoinColumn(name = "question_id", referencedColumnName = "question_id", nullable = false)
-//    private QuestionEntity questionByQuestionId;
-//    public QuestionEntity getQuestionByQuestionId() {
-//        return questionByQuestionId;
-//    }
-//    public void setQuestionByQuestionId(QuestionEntity questionByQuestionId) {
-//        this.questionByQuestionId = questionByQuestionId;
-//    }
-//
-//    @OneToMany(mappedBy = "possibleResponseByPossibleResponseId")
-//    private Collection<UserResponseEntity> userResponsesByPossibleResponseId;
-//    public Collection<UserResponseEntity> getUserResponsesByPossibleResponseId() {
-//        return userResponsesByPossibleResponseId;
-//    }
-//    public void setUserResponsesByPossibleResponseId(Collection<UserResponseEntity> userResponsesByPossibleResponseId) {
-//        this.userResponsesByPossibleResponseId = userResponsesByPossibleResponseId;
-//    }
+	//bi-directional many-to-one association to UserResponseEntity
+	@OneToMany(mappedBy="possibleResponse")
+	private List<UserResponseEntity> userResponses;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public PossibleResponseEntity() {
+	}
 
-        PossibleResponseEntity that = (PossibleResponseEntity) o;
+	public Integer getPossibleResponseId() {
+		return this.possibleResponseId;
+	}
 
-        if (possibleResponseId != that.possibleResponseId) return false;
-        if (possibleResponseChecked != that.possibleResponseChecked) return false;
-        if (questionId != that.questionId) return false;
-        if (possibleResponseLabel != null ? !possibleResponseLabel.equals(that.possibleResponseLabel) : that.possibleResponseLabel != null)
-            return false;
+	public void setPossibleResponseId(Integer possibleResponseId) {
+		this.possibleResponseId = possibleResponseId;
+	}
 
-        return true;
-    }
+	public Boolean getPossibleResponseChecked() {
+		return this.possibleResponseChecked;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = possibleResponseId;
-        result = 31 * result + (possibleResponseLabel != null ? possibleResponseLabel.hashCode() : 0);
-        result = 31 * result + (possibleResponseChecked ? 1 : 0);
-        result = 31 * result + questionId;
-        return result;
-    }
+	public void setPossibleResponseChecked(Boolean possibleResponseChecked) {
+		this.possibleResponseChecked = possibleResponseChecked;
+	}
+
+	public String getPossibleResponseLabel() {
+		return this.possibleResponseLabel;
+	}
+
+	public void setPossibleResponseLabel(String possibleResponseLabel) {
+		this.possibleResponseLabel = possibleResponseLabel;
+	}
+
+	public QuestionEntity getQuestion() {
+		return this.question;
+	}
+
+	public void setQuestion(QuestionEntity question) {
+		this.question = question;
+	}
+
+	public List<UserResponseEntity> getUserResponses() {
+		return this.userResponses;
+	}
+
+	public void setUserResponses(List<UserResponseEntity> userResponses) {
+		this.userResponses = userResponses;
+	}
+
+	public UserResponseEntity addUserRespons(UserResponseEntity userRespons) {
+		getUserResponses().add(userRespons);
+		userRespons.setPossibleResponse(this);
+
+		return userRespons;
+	}
+
+	public UserResponseEntity removeUserRespons(UserResponseEntity userRespons) {
+		getUserResponses().remove(userRespons);
+		userRespons.setPossibleResponse(null);
+
+		return userRespons;
+	}
+
 }

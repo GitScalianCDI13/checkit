@@ -1,112 +1,132 @@
 package com.scalian.checkit.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the question database table.
+ * 
+ */
 @Entity
-@Table(name = "question", schema = "public", catalog = "CheckUp")
-public class QuestionEntity {
-    @Id
-    @Column(name = "question_id", nullable = false)
-    private int questionId;
+@Table(name="question")
+@NamedQuery(name="QuestionEntity.findAll", query="SELECT q FROM QuestionEntity q")
+public class QuestionEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Basic
-    @Column(name = "question_label", nullable = false, length = 255)
-    private String questionLabel;
+	@Id
+	@Column(name="question_id")
+	private Integer questionId;
 
-    @Basic
-    @Column(name = "question_type", nullable = false)
-    private boolean questionType;
+	@Column(name="question_label")
+	private String questionLabel;
 
-    @Basic
-    @Column(name = "theme_id", nullable = false)
-    private int themeId;
+	@Column(name="question_type")
+	private Boolean questionType;
 
+	//bi-directional many-to-one association to PossibleResponseEntity
+	@OneToMany(mappedBy="question")
+	private List<PossibleResponseEntity> possibleResponses;
 
+	//bi-directional many-to-one association to ThemeEntity
+	@ManyToOne
+	@JoinColumn(name="theme_id")
+	private ThemeEntity theme;
 
-    public int getQuestionId() {
-        return questionId;
-    }
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
-    public String getQuestionLabel() {
-        return questionLabel;
-    }
-    public void setQuestionLabel(String questionLabel) {
-        this.questionLabel = questionLabel;
-    }
-    public boolean isQuestionType() {
-        return questionType;
-    }
-    public void setQuestionType(boolean questionType) {
-        this.questionType = questionType;
-    }
-    public int getThemeId() {
-        return themeId;
-    }
-    public void setThemeId(int themeId) {
-        this.themeId = themeId;
-    }
+	//bi-directional many-to-many association to TestEntity
+	@ManyToMany(mappedBy="questions")
+	private List<TestEntity> tests;
 
-//    @OneToMany(mappedBy = "questionByQuestionId")
-//    private Collection<PossibleResponseEntity> possibleResponsesByQuestionId;
-//    public Collection<PossibleResponseEntity> getPossibleResponsesByQuestionId() {
-//        return possibleResponsesByQuestionId;
-//    }
-//    public void setPossibleResponsesByQuestionId(Collection<PossibleResponseEntity> possibleResponsesByQuestionId) {
-//        this.possibleResponsesByQuestionId = possibleResponsesByQuestionId;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "theme_id", referencedColumnName = "theme_id", nullable = false)
-//    private ThemeEntity themeByThemeId;
-//    public ThemeEntity getThemeByThemeId() {
-//        return themeByThemeId;
-//    }
-//    public void setThemeByThemeId(ThemeEntity themeByThemeId) {
-//        this.themeByThemeId = themeByThemeId;
-//    }
-//
-//    @OneToMany(mappedBy = "questionByQuestionId")
-//    private Collection<TestQuestionEntity> testQuestionsByQuestionId;
-//    public Collection<TestQuestionEntity> getTestQuestionsByQuestionId() {
-//        return testQuestionsByQuestionId;
-//    }
-//    public void setTestQuestionsByQuestionId(Collection<TestQuestionEntity> testQuestionsByQuestionId) {
-//        this.testQuestionsByQuestionId = testQuestionsByQuestionId;
-//    }
-//
-//    @OneToMany(mappedBy = "questionByQuestionId")
-//    private Collection<UserResponseEntity> userResponsesByQuestionId;
-//    public Collection<UserResponseEntity> getUserResponsesByQuestionId() {
-//        return userResponsesByQuestionId;
-//    }
-//    public void setUserResponsesByQuestionId(Collection<UserResponseEntity> userResponsesByQuestionId) {
-//        this.userResponsesByQuestionId = userResponsesByQuestionId;
-//    }
+	//bi-directional many-to-one association to UserResponseEntity
+	@OneToMany(mappedBy="question")
+	private List<UserResponseEntity> userResponses;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public QuestionEntity() {
+	}
 
-        QuestionEntity that = (QuestionEntity) o;
+	public Integer getQuestionId() {
+		return this.questionId;
+	}
 
-        if (questionId != that.questionId) return false;
-        if (questionType != that.questionType) return false;
-        if (themeId != that.themeId) return false;
-        if (questionLabel != null ? !questionLabel.equals(that.questionLabel) : that.questionLabel != null)
-            return false;
+	public void setQuestionId(Integer questionId) {
+		this.questionId = questionId;
+	}
 
-        return true;
-    }
+	public String getQuestionLabel() {
+		return this.questionLabel;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = questionId;
-        result = 31 * result + (questionLabel != null ? questionLabel.hashCode() : 0);
-        result = 31 * result + (questionType ? 1 : 0);
-        result = 31 * result + themeId;
-        return result;
-    }
+	public void setQuestionLabel(String questionLabel) {
+		this.questionLabel = questionLabel;
+	}
+
+	public Boolean getQuestionType() {
+		return this.questionType;
+	}
+
+	public void setQuestionType(Boolean questionType) {
+		this.questionType = questionType;
+	}
+
+	public List<PossibleResponseEntity> getPossibleResponses() {
+		return this.possibleResponses;
+	}
+
+	public void setPossibleResponses(List<PossibleResponseEntity> possibleResponses) {
+		this.possibleResponses = possibleResponses;
+	}
+
+	public PossibleResponseEntity addPossibleRespons(PossibleResponseEntity possibleRespons) {
+		getPossibleResponses().add(possibleRespons);
+		possibleRespons.setQuestion(this);
+
+		return possibleRespons;
+	}
+
+	public PossibleResponseEntity removePossibleRespons(PossibleResponseEntity possibleRespons) {
+		getPossibleResponses().remove(possibleRespons);
+		possibleRespons.setQuestion(null);
+
+		return possibleRespons;
+	}
+
+	public ThemeEntity getTheme() {
+		return this.theme;
+	}
+
+	public void setTheme(ThemeEntity theme) {
+		this.theme = theme;
+	}
+
+	public List<TestEntity> getTests() {
+		return this.tests;
+	}
+
+	public void setTests(List<TestEntity> tests) {
+		this.tests = tests;
+	}
+
+	public List<UserResponseEntity> getUserResponses() {
+		return this.userResponses;
+	}
+
+	public void setUserResponses(List<UserResponseEntity> userResponses) {
+		this.userResponses = userResponses;
+	}
+
+	public UserResponseEntity addUserRespons(UserResponseEntity userRespons) {
+		getUserResponses().add(userRespons);
+		userRespons.setQuestion(this);
+
+		return userRespons;
+	}
+
+	public UserResponseEntity removeUserRespons(UserResponseEntity userRespons) {
+		getUserResponses().remove(userRespons);
+		userRespons.setQuestion(null);
+
+		return userRespons;
+	}
+
 }

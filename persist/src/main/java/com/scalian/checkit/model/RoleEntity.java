@@ -1,59 +1,70 @@
 package com.scalian.checkit.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the role database table.
+ * 
+ */
 @Entity
-@Table(name = "role", schema = "public", catalog = "CheckUp")
-public class RoleEntity {
-    @Id
-    @Column(name = "role_id", nullable = false)
-    private int roleId;
+@Table(name="role")
+@NamedQuery(name="RoleEntity.findAll", query="SELECT r FROM RoleEntity r")
+public class RoleEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Basic
-    @Column(name = "role_label", nullable = true, length = 255)
-    private String roleLabel;
+	@Id
+	@Column(name="role_id")
+	private Integer roleId;
 
-    public int getRoleId() {
-        return roleId;
-    }
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-    public String getRoleLabel() {
-        return roleLabel;
-    }
-    public void setRoleLabel(String roleLabel) {
-        this.roleLabel = roleLabel;
-    }
+	@Column(name="role_label")
+	private String roleLabel;
 
-//    @OneToMany(mappedBy = "roleByRoleId")
-//    private Collection<UserEntity> usersByRoleId;
-//    public Collection<UserEntity> getUsersByRoleId() {
-//        return usersByRoleId;
-//    }
-//    public void setUsersByRoleId(Collection<UserEntity> usersByRoleId) {
-//        this.usersByRoleId = usersByRoleId;
-//    }
+	//bi-directional many-to-one association to UserEntity
+	@OneToMany(mappedBy="role")
+	private List<UserEntity> users;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	public RoleEntity() {
+	}
 
-        RoleEntity that = (RoleEntity) o;
+	public Integer getRoleId() {
+		return this.roleId;
+	}
 
-        if (roleId != that.roleId) return false;
-        if (roleLabel != null ? !roleLabel.equals(that.roleLabel) : that.roleLabel != null) return false;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
 
-        return true;
-    }
+	public String getRoleLabel() {
+		return this.roleLabel;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = roleId;
-        result = 31 * result + (roleLabel != null ? roleLabel.hashCode() : 0);
-        return result;
-    }
+	public void setRoleLabel(String roleLabel) {
+		this.roleLabel = roleLabel;
+	}
 
+	public List<UserEntity> getUsers() {
+		return this.users;
+	}
+
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
+	}
+
+	public UserEntity addUser(UserEntity user) {
+		getUsers().add(user);
+		user.setRole(this);
+
+		return user;
+	}
+
+	public UserEntity removeUser(UserEntity user) {
+		getUsers().remove(user);
+		user.setRole(null);
+
+		return user;
+	}
 
 }

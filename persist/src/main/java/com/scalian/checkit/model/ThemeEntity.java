@@ -1,66 +1,96 @@
 package com.scalian.checkit.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
+
+/**
+ * The persistent class for the theme database table.
+ * 
+ */
 @Entity
-@Table(name = "theme", schema = "public", catalog = "CheckUp")
-public class ThemeEntity {
-    @Id
-    @Column(name = "theme_id", nullable = false)
-    private int themeId;
+@Table(name="theme")
+@NamedQuery(name="ThemeEntity.findAll", query="SELECT t FROM ThemeEntity t")
+public class ThemeEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    @Basic
-    @Column(name = "theme_label", nullable = false, length = 255)
-    private String themeLabel;
+	@Id
+	@Column(name="theme_id")
+	private Integer themeId;
 
-    public int getThemeId() {
-        return themeId;
-    }
-    public void setThemeId(int themeId) {
-        this.themeId = themeId;
-    }
-    public String getThemeLabel() {
-        return themeLabel;
-    }
-    public void setThemeLabel(String themeLabel) {
-        this.themeLabel = themeLabel;
-    }
+	@Column(name="theme_label")
+	private String themeLabel;
 
-//    @OneToMany(mappedBy = "themeByThemeId")
-//    private Collection<QuestionEntity> questionsByThemeId;
-//    public Collection<QuestionEntity> getQuestionsByThemeId() {
-//        return questionsByThemeId;
-//    }
-//    public void setQuestionsByThemeId(Collection<QuestionEntity> questionsByThemeId) {
-//        this.questionsByThemeId = questionsByThemeId;
-//    }
-//
-//    @OneToMany(mappedBy = "themeByThemeId")
-//    private Collection<TestEntity> testsByThemeId;
-//    public Collection<TestEntity> getTestsByThemeId() {
-//        return testsByThemeId;
-//    }
-//    public void setTestsByThemeId(Collection<TestEntity> testsByThemeId) {
-//        this.testsByThemeId = testsByThemeId;
-//    }
+	//bi-directional many-to-one association to QuestionEntity
+	@OneToMany(mappedBy="theme")
+	private List<QuestionEntity> questions;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	//bi-directional many-to-one association to TestEntity
+	@OneToMany(mappedBy="theme")
+	private List<TestEntity> tests;
 
-        ThemeEntity that = (ThemeEntity) o;
+	public ThemeEntity() {
+	}
 
-        if (themeId != that.themeId) return false;
-        if (themeLabel != null ? !themeLabel.equals(that.themeLabel) : that.themeLabel != null) return false;
+	public Integer getThemeId() {
+		return this.themeId;
+	}
 
-        return true;
-    }
+	public void setThemeId(Integer themeId) {
+		this.themeId = themeId;
+	}
 
-    @Override
-    public int hashCode() {
-        int result = themeId;
-        result = 31 * result + (themeLabel != null ? themeLabel.hashCode() : 0);
-        return result;
-    }
+	public String getThemeLabel() {
+		return this.themeLabel;
+	}
+
+	public void setThemeLabel(String themeLabel) {
+		this.themeLabel = themeLabel;
+	}
+
+	public List<QuestionEntity> getQuestions() {
+		return this.questions;
+	}
+
+	public void setQuestions(List<QuestionEntity> questions) {
+		this.questions = questions;
+	}
+
+	public QuestionEntity addQuestion(QuestionEntity question) {
+		getQuestions().add(question);
+		question.setTheme(this);
+
+		return question;
+	}
+
+	public QuestionEntity removeQuestion(QuestionEntity question) {
+		getQuestions().remove(question);
+		question.setTheme(null);
+
+		return question;
+	}
+
+	public List<TestEntity> getTests() {
+		return this.tests;
+	}
+
+	public void setTests(List<TestEntity> tests) {
+		this.tests = tests;
+	}
+
+	public TestEntity addTest(TestEntity test) {
+		getTests().add(test);
+		test.setTheme(this);
+
+		return test;
+	}
+
+	public TestEntity removeTest(TestEntity test) {
+		getTests().remove(test);
+		test.setTheme(null);
+
+		return test;
+	}
+
 }
