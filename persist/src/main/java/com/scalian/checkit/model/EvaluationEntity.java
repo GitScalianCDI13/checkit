@@ -27,7 +27,7 @@ public class EvaluationEntity implements Serializable {
 	private String evaluationLabel;
 
 	//bi-directional many-to-many association to TestEntity
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(
 		name="evaluation_test"
 		, joinColumns={

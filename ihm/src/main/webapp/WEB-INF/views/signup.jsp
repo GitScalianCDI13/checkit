@@ -45,10 +45,10 @@
                         <form role="form" action="subscribe" method="post">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Nom" name="lastname" value="" autofocus>
+                                    <input class="form-control" placeholder="Prénom" name="firstname" value="">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Prénom" name="firstname" value="">
+                                    <input class="form-control" placeholder="Nom" name="lastname" value="" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="E-mail" name="email" type="email" value="">

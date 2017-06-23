@@ -21,7 +21,12 @@ public class UserBU implements ICRUD<UserBO>, IUser{
 
     @Override
     public UserBO findOne(Integer id) {
-        return null;
+
+        UserEntity userEntity = userRepository.findOne(id);
+
+        UserBO userBO = UserMapping.mapUserEntityToBO(userEntity);
+
+        return userBO;
     }
 
     @Override
