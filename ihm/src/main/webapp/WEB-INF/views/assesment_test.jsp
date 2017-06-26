@@ -21,7 +21,7 @@
                     <p>
                         <c:out value="${test.testDescription}"/>
                     </p>
-                    <button class="btn btn-success">Démarrer le test</button>
+                    <a href="${root}assesment/test/${test.testId}/start" class="btn btn-success">Démarrer le test</a>
                 </div>
             </div>
             <!-- /.row -->
