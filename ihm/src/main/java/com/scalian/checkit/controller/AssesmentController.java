@@ -61,4 +61,15 @@ public class AssesmentController {
 
 	    return "assesment";
 	}
+
+    @RequestMapping("/assesment/test/{id}")
+    @Transactional
+    public String assesmentTest(HttpServletRequest request, HttpSession session, ModelMap model, @PathVariable String id) {
+
+        // Récupération du test
+        TestEntity test = testBU.findOne(Integer.valueOf(id));
+        model.addAttribute("test", test);
+
+        return "assesment_test";
+    }
 }
