@@ -74,7 +74,7 @@ public class UserBU implements ICRUD<UserBO>, IUser{
         return users;
     }
 
-    public UserBO addCandidat(String userLastname, String userFirstname, String userEmail){
+    public UserBO addCandidat(String userFirstname, String userLastname, String userEmail){
 
         RoleEntity roleEntity = new RoleEntity();
         roleEntity.setRoleId(3);

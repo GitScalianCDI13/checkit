@@ -13,6 +13,8 @@ public class ResultEvaluationBU {
     @Autowired
     public ResultEvaluationRepository resultEvaluationRepository;
 
+    public ResultEvaluationEntity findOne(Integer id){ return resultEvaluationRepository.findOne(id); }
+
     public ResultEvaluationEntity addNewResultEvaluation(Integer userId, Integer evaluationId){
 
         ResultEvaluationEntity resultEvaluationEntity = new ResultEvaluationEntity();

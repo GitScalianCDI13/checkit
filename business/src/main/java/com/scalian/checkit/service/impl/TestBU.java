@@ -11,6 +11,10 @@ public class TestBU {
     @Autowired
     public TestRepository testRepository;
 
+    public TestEntity findOne(Integer id){
+        return testRepository.findOne(id);
+    }
+
     public Iterable<TestEntity> findAll(){
         return testRepository.findAll();
     }

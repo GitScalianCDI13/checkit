@@ -16,9 +16,9 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><:c:out value="${evaluation.evaluationLabel}"/></h1>
+                    <h1 class="page-header"><c:out value="${evaluation.evaluationLabel}"/></h1>
                     <p>
-                        Bonjour <c:out value="${sessionScope.user.userFirstname}"/> <c:out value="${sessionScope.user.userLastname}"/>,
+                        Bonjour <c:out value="${userFirstname}"/> <c:out value="${userLastname}"/>,
                         <br/>
                         Bienvenue sur CheckIT, l'application d'évaluation des connaissances techniques des candidats de Scalian.
                     </p>
@@ -30,9 +30,11 @@
                     <h2>Passer un test :</h2>
                 </div>
                 <div class="col-lg-12">
-                    <c:forEach items="${tests}" var="item">
-    		            <a href="#"><img src="image/<c:out value="${item.testImage}"></c:out>" alt="<c:out value="${item.testLabel}"></c:out>"/></a>
-		            </c:forEach>
+                    <ul>
+                        <c:forEach items="${tests}" var="item">
+                            <li><a href="${root}assesment/test/<c:out value="${item.testId}" />"><c:out value="${item.testLabel}" /></a></li>
+                        </c:forEach>
+                    </ul>
                 </div>
             </div>
             <!-- /.row -->

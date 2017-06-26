@@ -32,22 +32,6 @@ public class SignupController {
 	@RequestMapping("/subscribe")
 	public String subscribe(HttpServletRequest request, HttpSession session, ModelMap model, RedirectAttributes redirectAttrs) {
 
-//        // Redirect to the candidat home page
-//        RoleBO roleBO = new RoleBO();
-//        roleBO.setRoleId(3);
-//        UserBO userBO = new UserBO();
-//        userBO.setRole(roleBO);
-//        userBO.setUserFirstname("Djé");
-//        userBO.setUserLastname("Lamy");
-//        userBO.setUserEmail("test@toto");
-//
-//        ResultEvaluationEntity resultEvaluationEntity = new ResultEvaluationEntity();
-//        resultEvaluationEntity.setResultEvaluationId(14);
-//
-//        session.setAttribute("user", userBO);
-//        session.setAttribute("resultEvaluation", resultEvaluationEntity);
-//        return "redirect:/candidat/evaluation";
-//
 	    // Get list of users with same email
 	    List<UserBO> usersList = userBU.findByUserEmail(request.getParameter("email"));
 
@@ -78,9 +62,9 @@ public class SignupController {
                 ResultEvaluationEntity resultEvaluation = resultEvaluationBU.addNewResultEvaluation(user.getUserId(), 1);
 
                 // Redirect to the candidat home page
-                session.setAttribute("user", user);
-                session.setAttribute("resultEvaluation", resultEvaluation);
-                return "redirect:/candidat/evaluation";
+                session.setAttribute("user", user.getUserId());
+                session.setAttribute("resultEvaluation", resultEvaluation.getResultEvaluationId());
+                return "redirect:/assesment";
 
             } catch (Exception e) {
                 return null;

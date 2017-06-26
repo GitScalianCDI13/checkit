@@ -23,6 +23,12 @@ public class TestEntity implements Serializable {
 	@Column(name="test_label")
 	private String testLabel;
 
+    @Column(name="test_image")
+    private String testImage;
+
+    @Column(name="test_description")
+    private String testDescription;
+
 	//bi-directional many-to-many association to EvaluationEntity
 	@ManyToMany(mappedBy="tests")
 	private List<EvaluationEntity> evaluations;
@@ -68,7 +74,23 @@ public class TestEntity implements Serializable {
 		this.testLabel = testLabel;
 	}
 
-	public List<EvaluationEntity> getEvaluations() {
+    public String getTestImage() {
+        return testImage;
+    }
+
+    public void setTestImage(String testImage) {
+        this.testImage = testImage;
+    }
+
+    public String getTestDescription() {
+        return testDescription;
+    }
+
+    public void setTestDescription(String testDescription) {
+        this.testDescription = testDescription;
+    }
+
+    public List<EvaluationEntity> getEvaluations() {
 		return this.evaluations;
 	}
 
