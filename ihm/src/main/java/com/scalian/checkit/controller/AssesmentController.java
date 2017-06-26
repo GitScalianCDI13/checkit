@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-public class EvaluationController {
+public class AssesmentController {
 
     @Autowired
     UserBU userBU;
@@ -61,16 +61,4 @@ public class EvaluationController {
 
 	    return "assesment";
 	}
-
-    @RequestMapping("/assesment/test/{id}")
-    @Transactional
-    public String assesmentTest(HttpServletRequest request, HttpSession session, ModelMap model, @PathVariable String id) {
-
-        // Récupération du test
-        TestEntity test = testBU.findOne(Integer.valueOf(id));
-System.out.println(test.getTestDescription());
-        model.addAttribute("test", test);
-
-        return "assesment_test";
-    }
 }
