@@ -6,6 +6,7 @@
 <%@attribute name="page_wrapper" fragment="true" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <c:url var="root" value="/" context="/CheckIt"/>
 
 <html lang="en">

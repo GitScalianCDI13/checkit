@@ -9,26 +9,80 @@
 <jsp:attribute name="page_wrapper">
 
         <div id="page-wrapper">
+            <!-- Breadcrumb -->
             <div class="row">
                 <ol class="breadcrumb">
                     <li><a href="${root}assesment">Evaluation</a></li>
-                    <li><a href="${root}assesment/test/"><c:out value="${test.testLabel}"/> </a></li>
-                    <li class="active"><a href="${root}assesment/test/<c:out value="${test.testId}"/>/question/<c:out value="${question.questionId}"/>">Question <c:out value="${index + 1}"/> </a></li>
+                    <li><a href="${root}assesment/test/">${test.testLabel}</a></li>
+                    <li class="active"><a href="${root}assesment/test/${test.testId}/question/${question.questionId}">Question ${index + 1}</a></li>
                 </ol>
             </div>
+            <!-- /Breadcrumb -->
+
+            <!-- Question -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><c:out value="${test.testLabel}"/></h1>
-                    <h2>Question <c:out value="${index + 1}"/></h2>
-                    <h3><c:out value="${question.questionLabel}"/></h3>
-                    réponse possible
-                    <br/>
-                    <button class="btn btn-success">Question Précédente</button>
-                    <button class="btn btn-success">Afficher la liste des questions</button>
-                    <button class="btn btn-success">Question Suivante</button>
+                    <h1 class="page-header">${test.testLabel}</h1>
+                    <h2>Question ${index + 1} / ${tot_question}</h2>
+                    <h3>${question.questionLabel}</h3>
+
+                    <!-- Form -->
+                    <form action="${root}assesment/response/save" method="post">
+                        <input type="hidden" name="id_test" value="${test.testId}"/>
+                        <input type="hidden" name="id_next_question" value="${id_next_question}"/>
+                        <input type="hidden" name="question_id" value="${question.questionId}"/>
+
+                        <!-- Possible responses -->
+                        <c:choose>
+                          <c:when test="${question.questionType == false}">
+                            <!-- Possibles responses Radio -->
+                            <c:forEach items="${possible_responses}" var="item">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="possible_response_id" value="${item.possibleResponseId}" />
+                                        ${item.possibleResponseLabel}
+                                    </label>
+                                </div>
+                            </c:forEach>
+                          </c:when>
+                          <c:otherwise>
+                            <!-- Possibles responses Checkbox -->
+                            <c:forEach items="${possible_responses}" var="item">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="possible_response_id" value="${item.possibleResponseId}" />
+                                        ${item.possibleResponseLabel}
+                                    </label>
+                                </div>
+                            </c:forEach>
+                          </c:otherwise>
+                        </c:choose>
+
+                        <br/>
+
+                        <!-- Previous button -->
+                        <c:if test = "${id_previous_question > 0 }">
+                            <a href="${root}assesment/test/${test.testId}/question/${id_previous_question}" class="btn btn-success">Question Précédente</a>
+                        </c:if>
+
+                        <!-- Questions list button -->
+                        <a href="" class="btn btn-success">Afficher la liste des questions</a>
+
+                        <!-- Next/End button -->
+                        <c:choose>
+                          <c:when test="${id_next_question > 0 }">
+                            <button type="submit" class="btn btn-success">Question Suivante</button>
+                          </c:when>
+                          <c:otherwise>
+                            <button type="submit" class="btn btn-success">Terminer le test</button>
+                          </c:otherwise>
+                        </c:choose>
+                    </form>
+                    <!-- /Form -->
+
                 </div>
             </div>
-            <!-- /.row -->
+            <!-- /Question -->
         </div>
         <!-- /#page-wrapper -->
 
