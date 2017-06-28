@@ -3,10 +3,10 @@ package com.scalian.checkit.service.impl;
 
 import com.scalian.checkit.model.*;
 import com.scalian.checkit.repository.*;
-import com.scalian.checkit.service.mapping.UserMapping;
-import com.scalian.checkit.service.model.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserResponseBU {
@@ -48,5 +48,13 @@ public class UserResponseBU {
         userResponseEntity.setPossibleResponse(possibleResponse);
 
         return userResponseRepository.save(userResponseEntity);
+    }
+
+    public List<UserResponseEntity> findByTestResultByQuestion(TestResultEntity testResultEntity, QuestionEntity questionEntity){
+        return userResponseRepository.findByTestResultAndQuestion(testResultEntity, questionEntity);
+    }
+
+    public void delete(UserResponseEntity userResponseEntity){
+        userResponseRepository.delete(userResponseEntity);
     }
 }

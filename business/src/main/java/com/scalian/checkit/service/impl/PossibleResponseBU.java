@@ -1,6 +1,7 @@
 package com.scalian.checkit.service.impl;
 
 import com.scalian.checkit.model.PossibleResponseEntity;
+import com.scalian.checkit.model.QuestionEntity;
 import com.scalian.checkit.repository.PossibleResponseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class PossibleResponseBU {
         return possibleResponseRepository.findOne(id);
     }
 
-    public List<PossibleResponseEntity> findByPossibleResponseChecked(Boolean data){
-        return possibleResponseRepository.findByPossibleResponseChecked(data);
+    public List<PossibleResponseEntity> findByQuestionAndPossibleResponseChecked(QuestionEntity questionEntity, Boolean data){
+        return possibleResponseRepository.findByQuestionAndPossibleResponseChecked(questionEntity, data);
     }
 
 }

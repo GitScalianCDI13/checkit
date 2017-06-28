@@ -40,4 +40,8 @@ public class TestResultBU {
     public TestResultEntity findOne(Integer id){
         return testResultRepository.findOne(id);
     }
+
+    public TestResultEntity save(TestResultEntity testResultEntity){
+        return testResultRepository.save(testResultEntity);
+    }
 }
