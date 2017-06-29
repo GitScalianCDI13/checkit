@@ -11,6 +11,8 @@ import com.scalian.checkit.service.model.UserBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TestResultBU {
 
@@ -43,5 +45,11 @@ public class TestResultBU {
 
     public TestResultEntity save(TestResultEntity testResultEntity){
         return testResultRepository.save(testResultEntity);
+
     }
+
+    public List<TestResultEntity> findAllByResultEvaluation(ResultEvaluationEntity resultEvaluationEntity){
+        return testResultRepository.findAllByResultEvaluation(resultEvaluationEntity);
+    }
+
 }

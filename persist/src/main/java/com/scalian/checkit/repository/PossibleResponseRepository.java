@@ -9,5 +9,5 @@ import java.util.List;
 public interface PossibleResponseRepository extends CrudRepository<PossibleResponseEntity, Integer> {
 
     List<PossibleResponseEntity> findByQuestionAndPossibleResponseChecked(QuestionEntity questionEntity, Boolean data);
-
+    List<PossibleResponseEntity> findAllByQuestionOrderByPossibleResponseId(QuestionEntity questionEntity);
 }

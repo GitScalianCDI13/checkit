@@ -12,9 +12,9 @@
             <!-- Breadcrumb -->
             <div class="row">
                 <ol class="breadcrumb">
-                    <li><a href="${root}assesment">Evaluation</a></li>
-                    <li><a href="${root}assesment/test/">${test.testLabel}</a></li>
-                    <li class="active"><a href="${root}assesment/test/${test.testId}/question/${question.questionId}">Question ${index + 1}</a></li>
+                    <li><a href="#">Evaluation</a></li>
+                    <li><a href="#">${test.testLabel}</a></li>
+                    <li class="active">Question ${index + 1}</li>
                 </ol>
             </div>
             <!-- /Breadcrumb -->

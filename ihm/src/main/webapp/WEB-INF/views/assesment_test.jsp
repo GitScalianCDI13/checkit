@@ -11,8 +11,8 @@
         <div id="page-wrapper">
             <div class="row">
                 <ol class="breadcrumb">
-                    <lil><a href="${root}assesment">Evaluation</a></lil>
-                    <li class="active"><a href="${root}assesment/test/">Test <c:out value="${test.testLabel}"/> </a></li>
+                    <li><a href="#">Evaluation</a></li>
+                    <li class="active">Test <c:out value="${test.testLabel}"/></li>
                 </ol>
             </div>
             <div class="row">

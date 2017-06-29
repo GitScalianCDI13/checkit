@@ -22,4 +22,7 @@ public class PossibleResponseBU {
         return possibleResponseRepository.findByQuestionAndPossibleResponseChecked(questionEntity, data);
     }
 
+    public List<PossibleResponseEntity> findAllByQuestionOrderByPossibleResponseId(QuestionEntity questionEntity){
+        return possibleResponseRepository.findAllByQuestionOrderByPossibleResponseId(questionEntity);
+    }
 }

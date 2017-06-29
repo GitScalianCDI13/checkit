@@ -11,7 +11,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <ol class="breadcrumb">
-                    <li class="active"><a href="${root}home">Evaluation</a></li>
+                    <li class="active"><a href="#">Evaluation</a></li>
                 </ol>
             </div>
             <div class="row">
@@ -30,11 +30,23 @@
                     <h2>Passer un test :</h2>
                 </div>
                 <div class="col-lg-12">
-                    <ul>
                         <c:forEach items="${tests}" var="item">
-                            <li><a href="${root}assesment/test/<c:out value="${item.testId}" />"><c:out value="${item.testLabel}" /></a></li>
+                            <c:choose>
+                                <c:when test="${testsOk.contains(item.testId)}">
+                                    <div class="col-md-2" style="text-align: center">
+                                        <img class="image-transparent" src="${root}image/test/${item.testImage}" alt="${item.testLabel}" width="100px" data-toggle="tooltip" data-placement="bottom" title="Test déja réalisé"/>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="col-md-2" style="text-align: center">
+                                        <a href="${root}assesment/test/<c:out value="${item.testId}" />">
+                                            <img src="${root}image/test/${item.testImage}" alt="${item.testLabel}" width="100px"/>
+                                                <%--<c:out value="${item.testLabel}" />--%>
+                                        </a>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
-                    </ul>
                 </div>
             </div>
             <!-- /.row -->

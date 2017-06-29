@@ -54,6 +54,10 @@ public class UserResponseBU {
         return userResponseRepository.findByTestResultAndQuestion(testResultEntity, questionEntity);
     }
 
+    public List<UserResponseEntity> findByTestResult(TestResultEntity testResultEntity){
+        return userResponseRepository.findByTestResult(testResultEntity);
+    }
+
     public void delete(UserResponseEntity userResponseEntity){
         userResponseRepository.delete(userResponseEntity);
     }

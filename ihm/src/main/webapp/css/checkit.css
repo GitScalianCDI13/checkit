@@ -1,0 +1,16 @@
+.glyphicon-check-green {
+    color : forestgreen;
+}
+
+.glyphicon-unchecked-red {
+    color : #b40000;
+}
+
+ul.no-style{
+    list-style: none;
+}
+
+img.image-transparent{
+    opacity: 0.2;
+    filter: alpha(opacity=20); /* For IE8 and earlier */
+}

@@ -10,4 +10,7 @@ import java.util.List;
 
 public interface UserResponseRepository extends CrudRepository<UserResponseEntity, Integer> {
      List<UserResponseEntity> findByTestResultAndQuestion(TestResultEntity testResultEntity, QuestionEntity questionEntity);
+
+     List<UserResponseEntity> findByTestResult(TestResultEntity testResultEntity);
+
 }

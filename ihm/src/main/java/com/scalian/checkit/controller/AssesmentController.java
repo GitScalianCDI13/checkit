@@ -1,6 +1,7 @@
 package com.scalian.checkit.controller;
 
 import com.scalian.checkit.model.*;
+import com.scalian.checkit.repository.TestRepository;
 import com.scalian.checkit.service.impl.*;
 import com.scalian.checkit.service.model.UserBO;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
@@ -17,6 +18,7 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,8 +29,6 @@ public class AssesmentController {
     UserBU userBU;
     @Autowired
     ResultEvaluationBU resultEvaluationBU;
-    @Autowired
-    EvaluationBU evaluationBU;
     @Autowired
     TestBU testBU;
     @Autowired
@@ -58,8 +58,14 @@ public class AssesmentController {
         EvaluationEntity evaluation  = resultEvaluation.getEvaluation();
 
         // Récupération des tests de l'évaluation
-        resultEvaluation.getEvaluation().getTests().size(); // NE PAS SUPPRIMER CETTE LIGNE !!! INDISPENSABLE CAR ON EST EN LAZY !!!
-        List<TestEntity> tests = resultEvaluation.getEvaluation().getTests();
+        List<TestEntity> tests = testBU.findAllByEvaluationsEqualsOrderByTestId(evaluation);
+
+        // Récupération des testReult
+        List<TestResultEntity> testResultEntities = testResultBU.findAllByResultEvaluation(resultEvaluation);
+        List<Integer> testsOk = new ArrayList<>();
+        for (TestResultEntity testResult: testResultEntities){
+            testsOk.add(testResult.getTest().getTestId());
+        }
 
         // Passage des données dans le ModelMap
         model.addAttribute("userFirstname", user.getUserFirstname());
@@ -67,6 +73,7 @@ public class AssesmentController {
         model.addAttribute("resultEvaluation", resultEvaluation);
         model.addAttribute("evaluation", evaluation);
         model.addAttribute("tests", tests);
+        model.addAttribute("testsOk", testsOk);
 
 	    return "assesment";
 	}
@@ -90,8 +97,7 @@ public class AssesmentController {
         TestEntity test = testBU.findOne(Integer.valueOf(id));
 
         // Récupération des questions du test
-        test.getQuestions().size();
-        List<QuestionEntity> questions = test.getQuestions();
+        List<QuestionEntity> questions = questionBU.findAllByTestsEqualsOrderByQuestionId(test);
 
         // Passer la liste des questions en session
         // session.setAttribute("questions",  questions);
@@ -108,6 +114,37 @@ public class AssesmentController {
         return "redirect:/assesment/test/" + id + "/question/" + idFirstQuestion;
     }
 
+
+    @RequestMapping("assesment/test/{idTest}/questions")
+    @Transactional
+    public String assesmentTestQuestions(HttpServletRequest request, HttpSession session, ModelMap model, @PathVariable String idTest) {
+
+        // Récupération du testResult
+        TestResultEntity testResult = testResultBU.findOne((Integer)(session.getAttribute("testResult")));
+
+        // Récupération du test
+        TestEntity test = testBU.findOne(Integer.valueOf(idTest));
+
+        // Récupération des questions du test
+        List<QuestionEntity> questions = questionBU.findAllByTestsEqualsOrderByQuestionId(test);
+
+        // Récupération des questions auxquelles le candidat a déjà répondu
+        List<UserResponseEntity> userResponseEntities = userResponseBU.findByTestResult(testResult);
+        Integer userResponseSize = userResponseEntities.size();
+        Integer[] questionsOk = new Integer[userResponseSize];
+        Integer i = 0;
+        for (UserResponseEntity userResponseEntity : userResponseEntities){
+            questionsOk[i] = userResponseEntity.getQuestion().getQuestionId();
+            i++;
+        }
+
+        model.addAttribute("questions", questions);
+        model.addAttribute("questionsOk", Arrays.asList(questionsOk));
+        model.addAttribute("test", test);
+
+        return "assesment_test_questions";
+    }
+
     @RequestMapping("assesment/test/{idTest}/question/{idQuestion}")
     @Transactional
     public String assesmentTestQuestion(HttpServletRequest request, HttpSession session, ModelMap model, @PathVariable String idTest, @PathVariable String idQuestion){
@@ -116,15 +153,15 @@ public class AssesmentController {
         TestEntity test = testBU.findOne(Integer.valueOf(idTest));
 
         // Récupération des questions du test
-        test.getQuestions().size();// à ne pas supprimer pour le LAZY!!
-        List<QuestionEntity> questions = test.getQuestions();
+        List<QuestionEntity> questions = questionBU.findAllByTestsEqualsOrderByQuestionId(test);
 
         // Récupération de la question en cours
         QuestionEntity question = questionBU.findOne(Integer.valueOf(idQuestion));
 
         // Récupération des réponses possibles
-        question.getPossibleResponses().size();
-        List<PossibleResponseEntity> possibleResponses = question.getPossibleResponses();
+        List<PossibleResponseEntity> possibleResponses = possibleResponseBU.findAllByQuestionOrderByPossibleResponseId(question);
+//        question.getPossibleResponses().size();
+//        List<PossibleResponseEntity> possibleResponses = question.getPossibleResponses();
 
         // Récupération position courante
         Integer index = questions.indexOf(question);
@@ -189,7 +226,8 @@ public class AssesmentController {
             }
         }
 
-        switch (request.getParameter("submit")){
+        // Traitements en fonction du bouton submit cliqué (Question suivante, Question précédente, Liste des questions, Terminer le test)
+        switch (request.getParameter("submit")) {
             case "previous":
                 return "redirect:/assesment/test/" + request.getParameter("id_test") + "/question/" + request.getParameter("id_previous_question");
             case "next":
@@ -198,157 +236,26 @@ public class AssesmentController {
                 return "redirect:/assesment/test/" + testResult.getTest().getTestId() + "/questions";
             case "end":
             default:
-                // Calcul du nombre de secondes entres le début et la fin du test
-                Long duration = System.currentTimeMillis() - (Long)session.getAttribute("timeStart");
-                Integer testResultTime = duration.intValue();
-
-                /*long second = (testResultTime / 1000) % 60;
-                long minute = (testResultTime / (1000 * 60)) % 60;
-                long hour = (testResultTime / (1000 * 60 * 60)) % 24;
-
-                String time = String.format("%02d:%02d:%02d", hour, minute, second);*/
-
-                    // Calcul de la note
-
-                    // Récupération du test
-                    TestEntity test = testResult.getTest();
-
-                    // Récupération des questions
-                    Integer questionSize = test.getQuestions().size();
-                    List<QuestionEntity> questions = test.getQuestions();
-
-                    // Note
-                    Integer note = 0;
-
-                    for (QuestionEntity question : questions){
-
-                        // Récupération des bonnes réponses de la question
-                        List<PossibleResponseEntity> possibleResponseEntities = possibleResponseBU.findByQuestionAndPossibleResponseChecked(question, true);
-                        Integer possibleResponseSize = possibleResponseEntities.size();
-
-                        // Récupération des réponses du candidat sur cette question
-                        List<UserResponseEntity> userResponseEntities = userResponseBU.findByTestResultByQuestion(testResult, question);
-                        Integer userResponseSize = userResponseEntities.size();
-                        Integer[] userResponseIdList = getUserResponsesArray(userResponseEntities, userResponseSize);
-
-                        if (possibleResponseSize == userResponseSize){
-
-                            Boolean error = false;
-
-                            for (PossibleResponseEntity possibleResponseEntity : possibleResponseEntities){
-                                Integer possibleResponseId = possibleResponseEntity.getPossibleResponseId();
-
-                                if (!Arrays.asList(userResponseIdList).contains(possibleResponseId)) {
-                                    error = true;
-                                    break;
-                                }
-                            }
-                            if(error == false){
-                                note++;
-                            }
-                        }
-
-                    }
-
-                    // Mettre à jour le testresult
-                    testResult.setTestResultScore(note);
-                    testResult.setTestResultTime(testResultTime);
-                    testResultBU.save(testResult);
-
-                    return "redirect:/assesment";
+                return "redirect:/assesment/test/" + testResult.getTest().getTestId() + "/save";
         }
-/*
-        if (Integer.parseInt(request.getParameter("id_next_question")) > 0){
-            return "redirect:/assesment/test/" + request.getParameter("id_test") + "/question/" + request.getParameter("id_next_question");
-        } else {
-
-            // Calcul du nombre de secondes entres le début et la fin du test
-            Long duration = System.currentTimeMillis() - (Long)session.getAttribute("timeStart");
-            Integer testResultTime = duration.intValue();
-
-            *//*long second = (testResultTime / 1000) % 60;
-            long minute = (testResultTime / (1000 * 60)) % 60;
-            long hour = (testResultTime / (1000 * 60 * 60)) % 24;
-
-            String time = String.format("%02d:%02d:%02d", hour, minute, second);*//*
-
-            // Calcul de la note
-
-            // Récupération du test
-            TestEntity test = testResult.getTest();
-
-            // Récupération des questions
-            Integer questionSize = test.getQuestions().size();
-            List<QuestionEntity> questions = test.getQuestions();
-
-            // Note
-            Integer note = 0;
-
-            for (QuestionEntity question : questions){
-
-                // Récupération des bonnes réponses de la question
-                List<PossibleResponseEntity> possibleResponseEntities = possibleResponseBU.findByQuestionAndPossibleResponseChecked(question, true);
-                Integer possibleResponseSize = possibleResponseEntities.size();
-
-                // Récupération des réponses du candidat sur cette question
-                List<UserResponseEntity> userResponseEntities = userResponseBU.findByTestResultByQuestion(testResult, question);
-                Integer userResponseSize = userResponseEntities.size();
-                Integer[] userResponseIdList = getUserResponsesArray(userResponseEntities, userResponseSize);
-
-                if (possibleResponseSize == userResponseSize){
-
-                    Boolean error = false;
-
-                    for (PossibleResponseEntity possibleResponseEntity : possibleResponseEntities){
-                        Integer possibleResponseId = possibleResponseEntity.getPossibleResponseId();
-
-                        if (!Arrays.asList(userResponseIdList).contains(possibleResponseId)) {
-                            error = true;
-                            break;
-                        }
-                    }
-                    if(error == false){
-                        note++;
-                    }
-                }
-
-            }
-
-            // Mettre à jour le testresult
-            testResult.setTestResultScore(note);
-            testResult.setTestResultTime(testResultTime);
-            testResultBU.save(testResult);
-
-            return "redirect:/assesment";
-        }*/
-
     }
 
-    // Méthode pour récupérer les réponses d'un candidat à une question d'un TestResult
-    public Integer[] getUserResponsesArray(List<UserResponseEntity> userResponses, Integer size){
-        Integer[] userResponseIdList = new Integer[size];
-        Integer i = 0;
-        for (UserResponseEntity userResponseEntity : userResponses){
-            userResponseIdList[i] = userResponseEntity.getPossibleResponse().getPossibleResponseId();
-            i++;
-        }
-        return userResponseIdList;
-    }
+    @RequestMapping("assesment/test/{id}/save")
+    @Transactional
+    public String saveTestResult(HttpSession session){
 
-    // Méthode qui sauvegarde le TestResult final
-    public String saveTestresult(){
+        // Récupération du testResult
+        TestResultEntity testResult = testResultBU.findOne((Integer)(session.getAttribute("testResult")));
+
         // Calcul du nombre de secondes entres le début et la fin du test
         Long duration = System.currentTimeMillis() - (Long)session.getAttribute("timeStart");
         Integer testResultTime = duration.intValue();
+        /*long second = (testResultTime / 1000) % 60;
+        long minute = (testResultTime / (1000 * 60)) % 60;
+        long hour = (testResultTime / (1000 * 60 * 60)) % 24;
+        String time = String.format("%02d:%02d:%02d", hour, minute, second);*/
 
-                /*long second = (testResultTime / 1000) % 60;
-                long minute = (testResultTime / (1000 * 60)) % 60;
-                long hour = (testResultTime / (1000 * 60 * 60)) % 24;
-
-                String time = String.format("%02d:%02d:%02d", hour, minute, second);*/
-
-        // Calcul de la note
-
+        /************** Calcul de la note ********************/
         // Récupération du test
         TestEntity test = testResult.getTest();
 
@@ -388,6 +295,7 @@ public class AssesmentController {
             }
 
         }
+        /****************** Fin note ***************/
 
         // Mettre à jour le testresult
         testResult.setTestResultScore(note);
@@ -395,5 +303,16 @@ public class AssesmentController {
         testResultBU.save(testResult);
 
         return "redirect:/assesment";
+    }
+
+    // Méthode pour récupérer les réponses d'un candidat à une question d'un TestResult
+    public Integer[] getUserResponsesArray(List<UserResponseEntity> userResponses, Integer size){
+        Integer[] userResponseIdList = new Integer[size];
+        Integer i = 0;
+        for (UserResponseEntity userResponseEntity : userResponses){
+            userResponseIdList[i] = userResponseEntity.getPossibleResponse().getPossibleResponseId();
+            i++;
+        }
+        return userResponseIdList;
     }
 }
