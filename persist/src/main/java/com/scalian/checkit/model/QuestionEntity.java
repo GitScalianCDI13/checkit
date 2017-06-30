@@ -23,6 +23,9 @@ public class QuestionEntity implements Serializable {
 	@Column(name="question_label")
 	private String questionLabel;
 
+	@Column(name="question_content")
+	private String questionContent;
+
 	@Column(name="question_type")
 	private Boolean questionType;
 
@@ -68,6 +71,14 @@ public class QuestionEntity implements Serializable {
 
 	public void setQuestionType(Boolean questionType) {
 		this.questionType = questionType;
+	}
+
+	public String getQuestionContent() {
+		return questionContent;
+	}
+
+	public void setQuestionContent(String questionContent) {
+		this.questionContent = questionContent;
 	}
 
 	public List<PossibleResponseEntity> getPossibleResponses() {

@@ -24,7 +24,8 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">${test.testLabel}</h1>
                     <h2>Question ${index + 1} / ${tot_question}</h2>
-                    <h3>${question.questionLabel}</h3>
+                    <h3><c:out value="${question.questionLabel}"/></h3>
+                    <h4><c:out value="${question.questionContent}"/></h4>
 
                     <!-- Form -->
                     <form action="${root}assesment/response/save" method="post">
@@ -44,7 +45,7 @@
                                 </c:choose>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="possible_response_id" value="${item.possibleResponseId}" ${checked} /> ${item.possibleResponseLabel}
+                                        <input type="radio" name="possible_response_id" value="${item.possibleResponseId}" ${checked} /> <c:out value="${item.possibleResponseLabel}"/>
                                     </label>
                                 </div>
                             </c:forEach>
@@ -58,7 +59,7 @@
                                 </c:choose>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="possible_response_id" value="${item.possibleResponseId}" ${checked} /> ${item.possibleResponseLabel}
+                                        <input type="checkbox" name="possible_response_id" value="${item.possibleResponseId}" ${checked} /> <c:out value="${item.possibleResponseLabel}"/>
                                     </label>
                                 </div>
                             </c:forEach>
