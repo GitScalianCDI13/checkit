@@ -64,7 +64,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="${root}home"><img src="${root}image/logo_scalian-1.png" alt="Scalian" height="25px"></a>
+                <a class="navbar-brand" href="${root}home"><img class="logo-scalian" src="${root}image/logo_scalian-1.png" alt="Scalian"></a>
             </div>
             <!-- /.navbar-header -->
 

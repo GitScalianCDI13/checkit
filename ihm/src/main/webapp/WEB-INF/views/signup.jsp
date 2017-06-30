@@ -22,6 +22,9 @@
     <!-- Custom Fonts -->
     <link href="${root}vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- CheckIT css -->
+    <link href="${root}css/checkit.css" rel="stylesheet" type="text/css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -31,10 +34,16 @@
 </head>
 
 <body>
+    <div id="btn-admin">
+        <a class="btn btn-sm btn-scalian" href="${root}auth">Administration</a>
+    </div>
+    <div id="logo">
+        <img src="${root}image/logo_scalian-1.png" alt="Scalian" class="logo-scalian">
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
+                <div class="login-panel panel panel-checkit">
                     <div class="panel-heading">
                         <h3 class="panel-title">Inscription</h3>
                     </div>
@@ -55,9 +64,12 @@
                                 </div>
 
                                 <!-- Change this to a button or input when using this as a form -->
-                                <button type="submit" class="btn btn-lg btn-success btn-block">S'inscrire</button>
+                                <button type="submit" class="btn btn-lg btn-scalian btn-block">S'inscrire</button>
                             </fieldset>
                         </form>
+                    </div>
+                    <div class="panel-footer">
+                      <div style="text-align: right"><a href=" ">Déja inscrit ></a></div>
                     </div>
                 </div>
             </div>

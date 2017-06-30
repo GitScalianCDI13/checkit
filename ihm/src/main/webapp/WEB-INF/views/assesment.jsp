@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><c:out value="${evaluation.evaluationLabel}"/></h1>
-                    <p>
+                    <p class="text-16">
                         Bonjour <c:out value="${userFirstname}"/> <c:out value="${userLastname}"/>,
                         <br/>
                         Bienvenue sur CheckIT, l'application d'évaluation des connaissances techniques des candidats de Scalian.
@@ -25,29 +25,51 @@
                 </div>
             </div>
             <!-- /.row -->
+            <br/><br/><br/>
             <div class="row">
-                <div class="col-lg-12">
-                    <h2>Passer un test :</h2>
-                </div>
-                <div class="col-lg-12">
-                        <c:forEach items="${tests}" var="item">
-                            <c:choose>
-                                <c:when test="${testsOk.contains(item.testId)}">
-                                    <div class="col-md-2" style="text-align: center">
-                                        <img class="image-transparent" src="${root}image/test/${item.testImage}" alt="${item.testLabel}" width="100px" data-toggle="tooltip" data-placement="bottom" title="Test déja réalisé"/>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="col-md-2" style="text-align: center">
-                                        <a href="${root}assesment/test/<c:out value="${item.testId}" />">
-                                            <img src="${root}image/test/${item.testImage}" alt="${item.testLabel}" width="100px"/>
-                                                <%--<c:out value="${item.testLabel}" />--%>
-                                        </a>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                </div>
+                <c:forEach items="${tests}" var="item">
+                    <div class="col-md-3">
+                        <div class="panel panel-checkit">
+                            <div class="panel-heading">
+                                ${item.testLabel}
+                            </div>
+                            <div class="panel-body">
+                                 <c:choose>
+                                    <c:when test="${testsOk.contains(item.testId)}">
+                                        <div class="img-test">
+                                            <img class="image-transparent" src="${root}image/test/${item.testImage}" alt="${item.testLabel}" width="100px" data-toggle="tooltip" data-placement="bottom" title="Test déja réalisé"/>
+                                        </div>
+                                        <div>
+                                            ${item.testSynopsis}
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div style="display: table-row">
+                                            <div style="display: table-cell; padding-right: 8px;">
+                                                <a href="${root}assesment/test/<c:out value="${item.testId}" />">
+                                                    <img src="${root}image/test/${item.testImage}" alt="${item.testLabel}" width="100px"/>
+                                                </a>
+                                            </div>
+                                            <div style="display: table-cell; vertical-align: middle">
+                                                ${item.testSynopsis}
+                                            </div>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <div class="panel-footer">
+                                <c:choose>
+                                    <c:when test="${testsOk.contains(item.testId)}">
+                                        Fait
+                                    </c:when>
+                                    <c:otherwise>
+                                        A faire
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
             <!-- /.row -->
         </div>

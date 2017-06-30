@@ -51,7 +51,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <img src="${root}image/logo_scalian-1.png" alt="Scalian" height="25px">
+                <img src="${root}image/logo_scalian-1.png" alt="Scalian" class="logo-scalian">
             </div>
             <!-- /.navbar-header -->
         </nav>
