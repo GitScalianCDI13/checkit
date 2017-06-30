@@ -23,15 +23,17 @@
                 <div class="col-lg-12">
                     <h1 class="page-header">${test.testLabel}</h1>
                     <h2>Liste des questions</h2>
+                    <br/>
                     <ul class="no-style">
                         <c:forEach items="${questions}" var="item">
                             <c:choose>
                                 <c:when test="${questionsOk.contains(item.questionId)}"><c:set var="icon" value="glyphicon glyphicon-check glyphicon-check-green" /></c:when>
                                 <c:otherwise><c:set var="icon" value="glyphicon glyphicon-unchecked glyphicon-unchecked-red" /></c:otherwise>
                             </c:choose>
-                            <li><span class="${icon}"></span> <a href="" >${item.questionLabel}</a></li>
+                            <li><span class="${icon}"></span> <a href="${root}assesment/test/${test.testId}/question/${item.questionId}" >${item.questionLabel}</a></li>
                         </c:forEach>
                     </ul>
+                    <br/><br/>
                     <a href="${root}assesment/test/${test.testId}/save" class="btn btn-success">Terminer le test</a>
                 </div>
             </div>
