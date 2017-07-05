@@ -118,21 +118,53 @@ public class UserBUTest {
     }
 
 
-//    @Test
-//    public void create() throws Exception {
-//    }
-//
-//    @Test
-//    public void update() throws Exception {
-//    }
-//
-//    @Test
-//    public void save() throws Exception {
-//    }
-//
-//    @Test
-//    public void delete() throws Exception {
-//    }
+    @Test
+    public void create() throws Exception {
+        RoleBO roleBO = new RoleBO();
+        roleBO.setRoleId(2);
+        roleBO.setRoleLabel("Admin");
+
+        UserBO user1 = new UserBO();
+        user1.setUserId(1);
+        user1.setRole(roleBO);
+
+        UserBO userBO = userBU.create(user1);
+        assertNull(userBO);
+    }
+
+    @Test
+    public void update() throws Exception {
+        RoleBO roleBO = new RoleBO();
+        roleBO.setRoleId(2);
+        roleBO.setRoleLabel("Admin");
+
+        UserBO user = new UserBO();
+        user.setUserId(1);
+        user.setRole(roleBO);
+
+        UserBO userBO = userBU.update(user);
+        assertNull(userBO);
+    }
+
+    @Test
+    public void save() throws Exception {
+        RoleBO roleBO = new RoleBO();
+        roleBO.setRoleId(2);
+        roleBO.setRoleLabel("Admin");
+
+        UserBO user1 = new UserBO();
+        user1.setUserId(1);
+        user1.setRole(roleBO);
+
+        UserBO userBO = userBU.save(user1);
+        assertNull(userBO);
+    }
+
+    @Test
+    public void delete() throws Exception {
+        UserBO userBO = userBU.delete(1);
+        assertNull(userBO);
+    }
 
     @Test
     public void findByUserEmail() throws Exception {
@@ -142,6 +174,7 @@ public class UserBUTest {
         RoleBO roleBO = new RoleBO();
         roleBO.setRoleId(3);
         roleBO.setRoleLabel("Candidat");
+        userExpected.setUserId(1);
         userExpected.setUserEmail(userEmail);
         userExpected.setRole(roleBO);
 
@@ -164,8 +197,6 @@ public class UserBUTest {
         assertArrayEquals(userExpextedList.toArray(), userBOs.toArray());
 
         verify(userRepository).findByUserEmail(userEmail);
-
-
     }
 
     @Test
@@ -199,7 +230,7 @@ public class UserBUTest {
         assertNotNull(userBO);
         assertEquals(userExpected.toString(), userBO.toString());
 
-        verify(userRepository).findOne(userId);
+        verify(userRepository).save(userEntity);
     }
 
 }
