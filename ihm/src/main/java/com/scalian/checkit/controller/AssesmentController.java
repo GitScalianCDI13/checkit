@@ -44,30 +44,35 @@ public class AssesmentController {
     @Transactional
 	public String assesment(HttpServletRequest request, HttpSession session, ModelMap model) {
 
-	    // Récupération des infos de session
+	    // Get session datas
 	    Integer userId = (Integer) session.getAttribute("user");
 	    Integer resultEvaluationId = (Integer) session.getAttribute("resultEvaluation");
 
-	    // Récupération de l'utilisateur
+	    // Get user
         UserBO user = userBU.findOne(userId);
 
-        // Récupération des infos de RésultEvaluation
+        //
+        if(user == null){
+            return "error";
+        }
+
+        // Get RésultEvaluation
         ResultEvaluationEntity resultEvaluation = resultEvaluationBU.findOne(resultEvaluationId);
 
-	    // Récupération de l'évaluation
+	    // Get Evaluation
         EvaluationEntity evaluation  = resultEvaluation.getEvaluation();
 
-        // Récupération des tests de l'évaluation
+        // Get Evaluation's tests
         List<TestEntity> tests = testBU.findAllByEvaluationsEqualsOrderByTestId(evaluation);
 
-        // Récupération des testReult
+        // Get testResult
         List<TestResultEntity> testResultEntities = testResultBU.findAllByResultEvaluation(resultEvaluation);
         List<Integer> testsOk = new ArrayList<>();
         for (TestResultEntity testResult: testResultEntities){
             testsOk.add(testResult.getTest().getTestId());
         }
 
-        // Passage des données dans le ModelMap
+        // Send datas to ModelMap
         model.addAttribute("userFirstname", user.getUserFirstname());
         model.addAttribute("userLastname", user.getUserLastname());
         model.addAttribute("resultEvaluation", resultEvaluation);
@@ -98,9 +103,6 @@ public class AssesmentController {
 
         // Récupération des questions du test
         List<QuestionEntity> questions = questionBU.findAllByTestsEqualsOrderByQuestionId(test);
-
-        // Passer la liste des questions en session
-        // session.setAttribute("questions",  questions);
 
         // Récupération de l'id de la première question
         Integer idFirstQuestion = questions.get(0).getQuestionId();

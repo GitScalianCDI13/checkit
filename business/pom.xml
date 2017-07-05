@@ -30,29 +30,37 @@
             <version>4.3.8.RELEASE</version>
         </dependency>
 
+
+        <!-- For Junit test -->
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter</artifactId>-->
             <!--<version>1.5.3.RELEASE</version>-->
         <!--</dependency>-->
-
         <!--<dependency>-->
-            <!--&lt;!&ndash; Import dependency management from Spring Boot &ndash;&gt;-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-dependencies</artifactId>-->
             <!--<version>1.5.3.RELEASE</version>-->
             <!--<type>pom</type>-->
             <!--<scope>import</scope>-->
         <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- End For Junit test -->
+
     </dependencies>
 
-    <!--<build>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
-    <!--</build>-->
-
+    <!-- For Junit test -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- End For Junit test -->
 </project>

@@ -16,9 +16,9 @@ public class MyApplication {
     public static void main(String[] args) {
         //SpringApplication.run(MyApplication.class);
         ConfigurableApplicationContext context = SpringApplication.run(MyApplication.class);
-        MyApplication main = context.getBean(MyApplication.class);
+        //MyApplication main = context.getBean(MyApplication.class);
 
-        main.test();
+        //main.test();
     }
 
     public void test(){

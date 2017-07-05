@@ -25,6 +25,7 @@
         <springboot.version>1.5.2.RELEASE</springboot.version>
         <springmvc.version>[4.2,4.3)</springmvc.version>
         <jstl.version>1.2</jstl.version>
+        <junit.version>4.12</junit.version>
 
         <start-class>hello.SpringBootWebApplicationTest</start-class>
     </properties>
@@ -55,6 +56,13 @@
                 <artifactId>spring-boot-starter-tomcat</artifactId>
                 <version>${springboot.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${springboot.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>

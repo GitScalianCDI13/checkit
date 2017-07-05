@@ -24,9 +24,16 @@ public class UserBU implements ICRUD<UserBO>, IUser{
 
         UserEntity userEntity = userRepository.findOne(id);
 
-        UserBO userBO = UserMapping.mapUserEntityToBO(userEntity);
+        if(userEntity != null) {
 
-        return userBO;
+            UserBO userBO = UserMapping.mapUserEntityToBO(userEntity);
+            return userBO;
+
+        }else{
+
+            return null;
+
+        }
     }
 
     @Override
@@ -74,6 +81,7 @@ public class UserBU implements ICRUD<UserBO>, IUser{
         return users;
     }
 
+    @Override
     public UserBO addCandidat(String userFirstname, String userLastname, String userEmail){
 
         RoleEntity roleEntity = new RoleEntity();
@@ -86,7 +94,9 @@ public class UserBU implements ICRUD<UserBO>, IUser{
         userEntity.setUserEmail(userEmail);
         userEntity.setUserPassword("test");
 
-        UserBO userBO = UserMapping.mapUserEntityToBO(userRepository.save(userEntity));
+        UserEntity userEntitySaved = userRepository.save(userEntity);
+
+        UserBO userBO = UserMapping.mapUserEntityToBO(userEntitySaved);
 
         return userBO;
     }
