@@ -23,7 +23,7 @@ public class UserMapping {
         userBO.setUserProjects(userEntity.getUserProjects());
         userBO.setUserPassword(userEntity.getUserPassword());
 
-        // Map des QuestionEntityToBO
+        // Map des ResultEvaluationEntityToBO
         List<ResultEvaluationBO> resultEvaluationBOList = new ArrayList<>();
         for (ResultEvaluationEntity resultEvaluationEntity : userEntity.getResultEvaluations()) {
             ResultEvaluationBO resultEvaluationBO = ResultEvaluationMapping.mapResultEvaluationEntityToBO(resultEvaluationEntity);
@@ -31,9 +31,7 @@ public class UserMapping {
         }
         userBO.setResultEvaluations(resultEvaluationBOList);
 
-
         // Map des UserResponseToBO
-
         List<UserResponseBO> userResponseBOList = new ArrayList<>();
         for (UserResponseEntity userResponseEntity : userEntity.getUserResponses()) {
             UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
@@ -58,7 +56,7 @@ public class UserMapping {
         userEntity.setUserPassword(userBO.getUserPassword());
 
 
-        // Map des QuestionBOToEntity
+        // Map des ResultEvaluationBOToEntity
         List<ResultEvaluationEntity> resultEvaluationEntityList = new ArrayList<>();
         for (ResultEvaluationBO resultEvaluationBO : userBO.getResultEvaluations()) {
             ResultEvaluationEntity resultEvaluationEntity = ResultEvaluationMapping.mapEvaluationBOToEntity(resultEvaluationBO);
@@ -66,9 +64,7 @@ public class UserMapping {
         }
         userEntity.setResultEvaluations(resultEvaluationEntityList);
 
-
         // Map des UserResponseBOToEntity
-
         List<UserResponseEntity> userResponseEntityList = new ArrayList<>();
         for (UserResponseBO userResponseBO : userBO.getUserResponses()) {
             UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
