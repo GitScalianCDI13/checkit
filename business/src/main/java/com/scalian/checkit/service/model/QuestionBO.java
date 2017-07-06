@@ -11,6 +11,7 @@ public class QuestionBO {
     private ThemeBO theme;
     private List<TestBO> tests;
     private List<UserResponseBO> userResponses;
+    private List<PossibleResponseBO> possibleResponses;
 
     public Integer getQuestionId() {
         return questionId;
@@ -66,5 +67,13 @@ public class QuestionBO {
 
     public void setUserResponses(List<UserResponseBO> userResponses) {
         this.userResponses = userResponses;
+    }
+
+    public List<PossibleResponseBO> getPossibleResponses() {
+        return possibleResponses;
+    }
+
+    public void setPossibleResponses(List<PossibleResponseBO> possibleResponses) {
+        this.possibleResponses = possibleResponses;
     }
 }

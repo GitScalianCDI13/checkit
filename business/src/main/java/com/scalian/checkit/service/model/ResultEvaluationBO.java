@@ -7,8 +7,6 @@ public class ResultEvaluationBO {
     private Integer resultEvaluationId;
     private Integer resultEvaluationTime;
     private Integer resultEvaluationScore;
-    private Integer userId;
-    private Integer evaluationId;
     private EvaluationBO evaluation;
     private UserBO user;
     private List<TestResultBO> testResults;
@@ -35,22 +33,6 @@ public class ResultEvaluationBO {
 
     public void setResultEvaluationScore(Integer resultEvaluationScore) {
         this.resultEvaluationScore = resultEvaluationScore;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getEvaluationId() {
-        return evaluationId;
-    }
-
-    public void setEvaluationId(Integer evaluationId) {
-        this.evaluationId = evaluationId;
     }
 
     public EvaluationBO getEvaluation() {
