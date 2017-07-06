@@ -25,17 +25,23 @@ public class UserMapping {
 
         // Map des ResultEvaluationEntityToBO
         List<ResultEvaluationBO> resultEvaluationBOList = new ArrayList<>();
-        for (ResultEvaluationEntity resultEvaluationEntity : userEntity.getResultEvaluations()) {
-            ResultEvaluationBO resultEvaluationBO = ResultEvaluationMapping.mapResultEvaluationEntityToBO(resultEvaluationEntity);
-            resultEvaluationBOList.add(resultEvaluationBO);
+        List<ResultEvaluationEntity> resultEvaluationEntities = userEntity.getResultEvaluations();
+        if(resultEvaluationEntities != null) {
+            for (ResultEvaluationEntity resultEvaluationEntity : resultEvaluationEntities) {
+                ResultEvaluationBO resultEvaluationBO = ResultEvaluationMapping.mapResultEvaluationEntityToBO(resultEvaluationEntity);
+                resultEvaluationBOList.add(resultEvaluationBO);
+            }
         }
         userBO.setResultEvaluations(resultEvaluationBOList);
 
         // Map des UserResponseToBO
         List<UserResponseBO> userResponseBOList = new ArrayList<>();
-        for (UserResponseEntity userResponseEntity : userEntity.getUserResponses()) {
-            UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
-            userResponseBOList.add(userResponseBO);
+        List<UserResponseEntity> userResponseEntities = userEntity.getUserResponses();
+        if(userResponseEntities != null) {
+            for (UserResponseEntity userResponseEntity : userResponseEntities) {
+                UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
+                userResponseBOList.add(userResponseBO);
+            }
         }
         userBO.setUserResponses(userResponseBOList);
 
@@ -55,22 +61,28 @@ public class UserMapping {
         userEntity.setUserProjects(userBO.getUserProjects());
         userEntity.setUserPassword(userBO.getUserPassword());
 
-
         // Map des ResultEvaluationBOToEntity
         List<ResultEvaluationEntity> resultEvaluationEntityList = new ArrayList<>();
-        for (ResultEvaluationBO resultEvaluationBO : userBO.getResultEvaluations()) {
-            ResultEvaluationEntity resultEvaluationEntity = ResultEvaluationMapping.mapEvaluationBOToEntity(resultEvaluationBO);
-            resultEvaluationEntityList.add(resultEvaluationEntity);
+        List<ResultEvaluationBO> resultEvaluationBOList = userBO.getResultEvaluations();
+        if(resultEvaluationBOList != null) {
+            for (ResultEvaluationBO resultEvaluationBO : resultEvaluationBOList) {
+                ResultEvaluationEntity resultEvaluationEntity = ResultEvaluationMapping.mapEvaluationBOToEntity(resultEvaluationBO);
+                resultEvaluationEntityList.add(resultEvaluationEntity);
+            }
         }
         userEntity.setResultEvaluations(resultEvaluationEntityList);
 
         // Map des UserResponseBOToEntity
         List<UserResponseEntity> userResponseEntityList = new ArrayList<>();
-        for (UserResponseBO userResponseBO : userBO.getUserResponses()) {
-            UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
-            userResponseEntityList.add(userResponseEntity);
+        List<UserResponseBO> userResponseBOList = userBO.getUserResponses();
+        if(userResponseBOList != null) {
+            for (UserResponseBO userResponseBO : userResponseBOList) {
+                UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
+                userResponseEntityList.add(userResponseEntity);
+            }
         }
         userEntity.setUserResponses(userResponseEntityList);
+
 
         return userEntity;
     }

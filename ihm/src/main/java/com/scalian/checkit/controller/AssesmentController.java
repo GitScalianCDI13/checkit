@@ -25,20 +25,39 @@ import java.util.List;
 @Controller
 public class AssesmentController {
 
+    private UserBU userBU;
+    private ResultEvaluationBU resultEvaluationBU;
+    private TestBU testBU;
+    private QuestionBU questionBU;
+    private TestResultBU testResultBU;
+    private PossibleResponseBU possibleResponseBU;
+    private UserResponseBU userResponseBU;
+
+//    @Autowired
+//    UserBU userBU;
+//    @Autowired
+//    ResultEvaluationBU resultEvaluationBU;
+//    @Autowired
+//    TestBU testBU;
+//    @Autowired
+//    QuestionBU questionBU;
+//    @Autowired
+//    TestResultBU testResultBU;
+//    @Autowired
+//    PossibleResponseBU possibleResponseBU;
+//    @Autowired
+//    UserResponseBU userResponseBU;
+
     @Autowired
-    UserBU userBU;
-    @Autowired
-    ResultEvaluationBU resultEvaluationBU;
-    @Autowired
-    TestBU testBU;
-    @Autowired
-    QuestionBU questionBU;
-    @Autowired
-    TestResultBU testResultBU;
-    @Autowired
-    PossibleResponseBU possibleResponseBU;
-    @Autowired
-    UserResponseBU userResponseBU;
+    public AssesmentController(UserBU userBU, ResultEvaluationBU resultEvaluationBU, TestBU testBU, QuestionBU questionBU, TestResultBU testResultBU, PossibleResponseBU possibleResponseBU, UserResponseBU userResponseBU){
+        this.userBU = userBU;
+        this.resultEvaluationBU = resultEvaluationBU;
+        this.testBU = testBU;
+        this.questionBU = questionBU;
+        this.testResultBU = testResultBU;
+        this.possibleResponseBU = possibleResponseBU;
+        this.userResponseBU = userResponseBU;
+    }
 
 	@RequestMapping("/assesment")
     @Transactional
@@ -51,7 +70,6 @@ public class AssesmentController {
 	    // Get user
         UserBO user = userBU.findOne(userId);
 
-        //
         if(user == null){
             return "error";
         }
