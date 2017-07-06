@@ -1,5 +1,7 @@
 package com.scalian.checkit.service.model;
 
+import java.util.List;
+
 public class ResultEvaluationBO {
     
     private Integer resultEvaluationId;
@@ -7,6 +9,9 @@ public class ResultEvaluationBO {
     private Integer resultEvaluationScore;
     private Integer userId;
     private Integer evaluationId;
+    private EvaluationBO evaluation;
+    private UserBO user;
+    private List<TestResultBO> testResults;
 
     public Integer getResultEvaluationId() {
         return resultEvaluationId;
@@ -46,5 +51,29 @@ public class ResultEvaluationBO {
 
     public void setEvaluationId(Integer evaluationId) {
         this.evaluationId = evaluationId;
+    }
+
+    public EvaluationBO getEvaluation() {
+        return evaluation;
+    }
+
+    public void setEvaluation(EvaluationBO evaluation) {
+        this.evaluation = evaluation;
+    }
+
+    public UserBO getUser() {
+        return user;
+    }
+
+    public void setUser(UserBO user) {
+        this.user = user;
+    }
+
+    public List<TestResultBO> getTestResults() {
+        return testResults;
+    }
+
+    public void setTestResults(List<TestResultBO> testResults) {
+        this.testResults = testResults;
     }
 }
