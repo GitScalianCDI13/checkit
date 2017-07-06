@@ -22,25 +22,34 @@ public class TestMapping {
 
         // Map Questions
         List<QuestionBO> questionBOList = new ArrayList<>();
-        for(QuestionEntity questionEntity : testEntity.getQuestions()){
-            QuestionBO questionBO = QuestionMapping.mapQuestionEntityToBO(questionEntity);
-            questionBOList.add(questionBO);
+        List<QuestionEntity> questionEntities = testEntity.getQuestions();
+        if(questionEntities != null) {
+            for (QuestionEntity questionEntity : questionEntities) {
+                QuestionBO questionBO = QuestionMapping.mapQuestionEntityToBO(questionEntity);
+                questionBOList.add(questionBO);
+            }
         }
         testBO.setQuestions(questionBOList);
 
         // Map Evaluations
         List<EvaluationBO> evaluationBOList = new ArrayList<>();
-        for(EvaluationEntity evaluationEntity : testEntity.getEvaluations()){
-            EvaluationBO evaluationBO = EvaluationMapping.mapEvaluationEntityToBO(evaluationEntity);
-            evaluationBOList.add(evaluationBO);
+        List<EvaluationEntity> evaluationEntities = testEntity.getEvaluations();
+        if(evaluationEntities != null) {
+            for (EvaluationEntity evaluationEntity : evaluationEntities) {
+                EvaluationBO evaluationBO = EvaluationMapping.mapEvaluationEntityToBO(evaluationEntity);
+                evaluationBOList.add(evaluationBO);
+            }
         }
         testBO.setEvaluations(evaluationBOList);
 
         // Map TestResults
         List<TestResultBO> testResultBOList = new ArrayList<>();
-        for(TestResultEntity testResultEntity : testEntity.getTestResults()){
-            TestResultBO testResultBO = TestResultMapping.mapTestResultEntityToBO(testResultEntity);
-            testResultBOList.add(testResultBO);
+        List<TestResultEntity> testResultEntities = testEntity.getTestResults();
+        if(testResultEntities != null) {
+            for (TestResultEntity testResultEntity : testResultEntities) {
+                TestResultBO testResultBO = TestResultMapping.mapTestResultEntityToBO(testResultEntity);
+                testResultBOList.add(testResultBO);
+            }
         }
         testBO.setTestResults(testResultBOList);
 
@@ -61,25 +70,34 @@ public class TestMapping {
 
         // Map Questions
         List<QuestionEntity> questionEntities = new ArrayList<>();
-        for (QuestionBO questionBO : testBO.getQuestions()){
-            QuestionEntity questionEntity = QuestionMapping.mapQuestionBOToEntity(questionBO);
-            questionEntities.add(questionEntity);
+        List<QuestionBO> questionBOList = testBO.getQuestions();
+        if(questionBOList != null) {
+            for (QuestionBO questionBO : questionBOList) {
+                QuestionEntity questionEntity = QuestionMapping.mapQuestionBOToEntity(questionBO);
+                questionEntities.add(questionEntity);
+            }
         }
         testEntity.setQuestions(questionEntities);
 
         // Map Evaluations
         List<EvaluationEntity> evaluationEntities = new ArrayList<>();
-        for(EvaluationBO evaluationBO : testBO.getEvaluations()){
-            EvaluationEntity evaluationEntity = EvaluationMapping.mapEvaluationBOToEntity(evaluationBO);
-            evaluationEntities.add(evaluationEntity);
+        List<EvaluationBO> evaluationBOList = testBO.getEvaluations();
+        if(evaluationBOList != null) {
+            for (EvaluationBO evaluationBO : evaluationBOList) {
+                EvaluationEntity evaluationEntity = EvaluationMapping.mapEvaluationBOToEntity(evaluationBO);
+                evaluationEntities.add(evaluationEntity);
+            }
         }
         testEntity.setEvaluations(evaluationEntities);
 
         // Map TestResults
         List<TestResultEntity> testResultEntities = new ArrayList<>();
-        for(TestResultBO testResultBO : testBO.getTestResults()){
-            TestResultEntity testResultEntity = TestResultMapping.mapTestResultBOToEntity(testResultBO);
-            testResultEntities.add(testResultEntity);
+        List<TestResultBO> testResultBOList = testBO.getTestResults();
+        if(testResultBOList != null) {
+            for (TestResultBO testResultBO : testResultBOList) {
+                TestResultEntity testResultEntity = TestResultMapping.mapTestResultBOToEntity(testResultBO);
+                testResultEntities.add(testResultEntity);
+            }
         }
         testEntity.setTestResults(testResultEntities);
 

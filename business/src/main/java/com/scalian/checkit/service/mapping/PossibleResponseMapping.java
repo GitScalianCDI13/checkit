@@ -25,9 +25,12 @@ public class PossibleResponseMapping {
 
         // Map UserResponse
         List<UserResponseBO> userResponseBOList = new ArrayList<>();
-        for(UserResponseEntity userResponseEntity : possibleResponseEntity.getUserResponses()) {
-            UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
-            userResponseBOList.add(userResponseBO);
+        List<UserResponseEntity> userResponseEntities = possibleResponseEntity.getUserResponses();
+        if(userResponseEntities != null) {
+            for (UserResponseEntity userResponseEntity : userResponseEntities) {
+                UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
+                userResponseBOList.add(userResponseBO);
+            }
         }
         possibleResponseBO.setUserResponses(userResponseBOList);
 
@@ -46,9 +49,12 @@ public class PossibleResponseMapping {
 
         // Map des UserResponse
         List<UserResponseEntity> userResponseEntities = new ArrayList<>();
-        for (UserResponseBO userResponseBO : possibleResponseBO.getUserResponses()){
-            UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
-            userResponseEntities.add(userResponseEntity);
+        List<UserResponseBO> userResponseBOList = possibleResponseBO.getUserResponses();
+        if(userResponseBOList != null) {
+            for (UserResponseBO userResponseBO : userResponseBOList) {
+                UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
+                userResponseEntities.add(userResponseEntity);
+            }
         }
         possibleResponseEntity.setUserResponses(userResponseEntities);
 

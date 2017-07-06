@@ -22,25 +22,34 @@ public class QuestionMapping {
 
         // Map des Tests
         List<TestBO> testBOList = new ArrayList<>();
-        for(TestEntity testEntity : questionEntity.getTests()){
-            TestBO testBO = TestMapping.mapTestEntityToBO(testEntity);
-            testBOList.add(testBO);
+        List<TestEntity> testEntities = questionEntity.getTests();
+        if(testEntities != null) {
+            for (TestEntity testEntity : testEntities) {
+                TestBO testBO = TestMapping.mapTestEntityToBO(testEntity);
+                testBOList.add(testBO);
+            }
         }
         questionBO.setTests(testBOList);
 
         // Map des UserResponse
         List<UserResponseBO> userResponseBOList = new ArrayList<>();
-        for(UserResponseEntity userResponseEntity : questionEntity.getUserResponses()){
-            UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
-            userResponseBOList.add(userResponseBO);
+        List<UserResponseEntity> userResponseEntities = questionEntity.getUserResponses();
+        if(userResponseEntities != null) {
+            for (UserResponseEntity userResponseEntity : userResponseEntities) {
+                UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
+                userResponseBOList.add(userResponseBO);
+            }
         }
         questionBO.setUserResponses(userResponseBOList);
 
         // Map des PossibleResponse
         List<PossibleResponseBO> possibleResponseBOList = new ArrayList<>();
-        for(PossibleResponseEntity possibleResponseEntity : questionEntity.getPossibleResponses()){
-            PossibleResponseBO possibleResponseBO = PossibleResponseMapping.mapPossibleResponseEntityToBO(possibleResponseEntity);
-            possibleResponseBOList.add(possibleResponseBO);
+        List<PossibleResponseEntity> possibleResponseEntities = questionEntity.getPossibleResponses();
+        if(possibleResponseEntities != null) {
+            for (PossibleResponseEntity possibleResponseEntity : possibleResponseEntities) {
+                PossibleResponseBO possibleResponseBO = PossibleResponseMapping.mapPossibleResponseEntityToBO(possibleResponseEntity);
+                possibleResponseBOList.add(possibleResponseBO);
+            }
         }
         questionBO.setPossibleResponses(possibleResponseBOList);
 
@@ -60,25 +69,34 @@ public class QuestionMapping {
 
         // Map des Test
         List<TestEntity> testEntities = new ArrayList<>();
-        for(TestBO testBO : questionBO.getTests()) {
-            TestEntity testEntity = TestMapping.mapTestBOToEntity(testBO);
-            testEntities.add(testEntity);
+        List<TestBO> testBOList = questionBO.getTests();
+        if(testBOList != null) {
+            for (TestBO testBO : testBOList) {
+                TestEntity testEntity = TestMapping.mapTestBOToEntity(testBO);
+                testEntities.add(testEntity);
+            }
         }
         questionEntity.setTests(testEntities);
 
         // Map des UserResponse
         List<UserResponseEntity> userResponseEntities = new ArrayList<>();
-        for(UserResponseBO userResponseBO : questionBO.getUserResponses()){
-            UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
-            userResponseEntities.add(userResponseEntity);
+        List<UserResponseBO> userResponseBOList = questionBO.getUserResponses();
+        if(userResponseBOList != null) {
+            for (UserResponseBO userResponseBO : userResponseBOList) {
+                UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
+                userResponseEntities.add(userResponseEntity);
+            }
         }
         questionEntity.setUserResponses(userResponseEntities);
 
         // Map PossibleResponse
         List<PossibleResponseEntity> possibleResponseEntities = new ArrayList<>();
-        for(PossibleResponseBO possibleResponseBO : questionBO.getPossibleResponses()){
-            PossibleResponseEntity possibleResponseEntity = PossibleResponseMapping.mapPossibleResponseBOToEntity(possibleResponseBO);
-            possibleResponseEntities.add(possibleResponseEntity);
+        List<PossibleResponseBO> possibleResponseBOList = questionBO.getPossibleResponses();
+        if(possibleResponseBOList != null) {
+            for (PossibleResponseBO possibleResponseBO : possibleResponseBOList) {
+                PossibleResponseEntity possibleResponseEntity = PossibleResponseMapping.mapPossibleResponseBOToEntity(possibleResponseBO);
+                possibleResponseEntities.add(possibleResponseEntity);
+            }
         }
         questionEntity.setPossibleResponses(possibleResponseEntities);
 
