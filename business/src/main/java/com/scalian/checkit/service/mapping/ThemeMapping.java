@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ThemeMapping {
 
-    public static ThemeBO mapThemeEntityToBO(ThemeEntity themeEntity){
+    public static ThemeBO mapThemeEntityToBO(ThemeEntity themeEntity) {
         ThemeBO themeBO = new ThemeBO();
         themeBO.setThemeId(themeEntity.getThemeId());
         themeBO.setThemeLabel(themeEntity.getThemeLabel());
@@ -20,24 +20,31 @@ public class ThemeMapping {
 
         // Map des QuestionEntityToBO
         List<QuestionBO> questionBOList = new ArrayList<>();
-        for (QuestionEntity questionEntity : themeEntity.getQuestions()){
-            QuestionBO questionBO = QuestionMapping.mapQuestionEntityToBO(questionEntity);
-            questionBOList.add(questionBO);
+        List<QuestionEntity> questionEntityList = themeEntity.getQuestions();
+        if (questionEntityList != null) {
+            for (QuestionEntity questionEntity : questionEntityList) {
+                QuestionBO questionBO = QuestionMapping.mapQuestionEntityToBO(questionEntity);
+                questionBOList.add(questionBO);
+            }
         }
         themeBO.setQuestions(questionBOList);
 
 
         // Map des TestToBO
         List<TestBO> testBOList = new ArrayList<>();
-        for (TestEntity testEntity : themeEntity.getTests()){
-            TestBO testBO = TestMapping.mapTestEntityToBO(testEntity);
-            testBOList.add(testBO);
+        List<TestEntity> testEntityList = themeEntity.getTests();
+        if (testEntityList != null) {
+            for (TestEntity testEntity : testEntityList) {
+                TestBO testBO = TestMapping.mapTestEntityToBO(testEntity);
+                testBOList.add(testBO);
+            }
         }
         themeBO.setTests(testBOList);
 
-        return themeBO;
 
+        return themeBO;
     }
+
 
     public static ThemeEntity mapThemeBOToEntity(ThemeBO themeBO){
         ThemeEntity themeEntity = new ThemeEntity();
@@ -46,18 +53,24 @@ public class ThemeMapping {
 
         // Map des QuestionBOToEntity
         List<QuestionEntity> questionEntityList = new ArrayList<>();
-        for (QuestionBO questionBO : themeBO.getQuestions()){
-            QuestionEntity questionEntity = QuestionMapping.mapQuestionBOToEntity(questionBO);
-            questionEntityList.add(questionEntity);
+        List<QuestionBO> questionBOList = themeBO.getQuestions();
+        if (questionBOList != null) {
+            for (QuestionBO questionBO : questionBOList) {
+                QuestionEntity questionEntity = QuestionMapping.mapQuestionBOToEntity(questionBO);
+                questionEntityList.add(questionEntity);
+            }
         }
         themeEntity.setQuestions(questionEntityList);
 
 
         // Map des TestBOToEntity
         List<TestEntity> testEntityList = new ArrayList<>();
-        for (TestBO testBO : themeBO.getTests()){
-            TestEntity testEntity = TestMapping.mapTestBOToEntity(testBO);
-            testEntityList.add(testEntity);
+        List<TestBO> testBOList = themeBO.getTests();
+        if (testBOList != null ) {
+            for (TestBO testBO : testBOList) {
+                TestEntity testEntity = TestMapping.mapTestBOToEntity(testBO);
+                testEntityList.add(testEntity);
+            }
         }
         themeEntity.setTests(testEntityList);
 
