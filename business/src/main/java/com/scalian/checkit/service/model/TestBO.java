@@ -6,13 +6,12 @@ public class TestBO {
 
     private Integer testId;
     private String testLabel;
-    private Integer themeId;
     private String testImage;
     private String testDescription;
     private String testSynopsis;
+    private ThemeBO theme;
     private List<EvaluationBO> evaluations;
     private List<QuestionBO> questions;
-    private ThemeBO theme;
     private List<TestResultBO> testResults;
 
     public Integer getTestId() {
@@ -85,13 +84,5 @@ public class TestBO {
 
     public void setTestLabel(String testLabel) {
         this.testLabel = testLabel;
-    }
-
-    public Integer getThemeId() {
-        return themeId;
-    }
-
-    public void setThemeId(Integer themeId) {
-        this.themeId = themeId;
     }
 }

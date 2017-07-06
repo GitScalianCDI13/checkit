@@ -65,14 +65,14 @@ public class AssesmentController {
         // Get Evaluation's tests
         List<TestEntity> tests = testBU.findAllByEvaluationsEqualsOrderByTestId(evaluation);
 
-        // Get testResult
+        //  testResult
         List<TestResultEntity> testResultEntities = testResultBU.findAllByResultEvaluation(resultEvaluation);
         List<Integer> testsOk = new ArrayList<>();
         for (TestResultEntity testResult: testResultEntities){
             testsOk.add(testResult.getTest().getTestId());
         }
 
-        // Send datas to ModelMap
+        // Passage des données dans le ModelMap
         model.addAttribute("userFirstname", user.getUserFirstname());
         model.addAttribute("userLastname", user.getUserLastname());
         model.addAttribute("resultEvaluation", resultEvaluation);
