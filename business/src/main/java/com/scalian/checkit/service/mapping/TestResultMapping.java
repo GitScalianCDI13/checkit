@@ -1,19 +1,68 @@
 package com.scalian.checkit.service.mapping;
 
+import com.scalian.checkit.model.ResultEvaluationEntity;
+import com.scalian.checkit.model.TestEntity;
 import com.scalian.checkit.model.TestResultEntity;
+import com.scalian.checkit.model.UserResponseEntity;
+import com.scalian.checkit.service.model.ResultEvaluationBO;
+import com.scalian.checkit.service.model.TestBO;
 import com.scalian.checkit.service.model.TestResultBO;
+import com.scalian.checkit.service.model.UserResponseBO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestResultMapping {
 
-    public static TestResultBO mapTestResultEntityToBO(TestResultEntity testResultEntity){
+    public static TestResultBO mapTestResultEntityToBO(TestResultEntity testResultEntity) {
         TestResultBO testResultBO = new TestResultBO();
+        testResultBO.setTestResultId(testResultEntity.getTestResultId());
+        testResultBO.setTestResultScore(testResultEntity.getTestResultScore());
+        testResultBO.setTestResultTime(testResultEntity.getTestResultTime());
+
+        // Map des UserResponseToBO
+        List<UserResponseBO> userResponseBOList = new ArrayList<>();
+        for (UserResponseEntity userResponseEntity : testResultEntity.getUserResponses()) {
+            UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
+            userResponseBOList.add(userResponseBO);
+        }
+        testResultBO.setUserResponses(userResponseBOList);
+
+        // Map des TestTToBO
+        TestBO testBO = TestMapping.mapTestEntityToBO(testResultEntity.getTest());
+        testResultBO.setTest(testBO);
+
+
+        // Map des ResultEvaluationToBO
+        ResultEvaluationBO resultEvaluationBO = ResultEvaluationMapping.mapResultEvaluationEntityToBO(testResultEntity.getResultEvaluation());
+        testResultBO.setResultEvaluation(resultEvaluationBO);
 
         return testResultBO;
     }
 
+
     public static TestResultEntity mapTestResultBOToEntity(TestResultBO testResultBO){
         TestResultEntity testResultEntity = new TestResultEntity();
+        testResultEntity.setTestResultId(testResultEntity.getTestResultId());
+        testResultEntity.setTestResultScore(testResultEntity.getTestResultScore());
+        testResultEntity.setTestResultTime(testResultEntity.getTestResultTime());
 
+        // Map des TestResultBOToEntity
+        List<UserResponseEntity> userResponseEntityList = new ArrayList<>();
+        for (UserResponseBO userResponseBO : testResultBO.getUserResponses()){
+            UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
+            userResponseEntityList.add(userResponseEntity);
+        }
+        testResultEntity.setUserResponses(userResponseEntityList);
+
+        // Map des TestTBOToEntity
+        TestEntity testEntity = TestMapping.mapTestBOToEntity(testResultBO.getTest());
+        testResultEntity.setTest(testEntity);
+
+
+        // Map des ResultEvaluationBOToEntity
+        ResultEvaluationEntity resultEvaluationEntity = ResultEvaluationMapping.mapEvaluationBOToEntity(testResultBO.getResultEvaluation());
+        testResultEntity.setResultEvaluation(resultEvaluationEntity);
 
         return testResultEntity;
     }
