@@ -1,4 +1,4 @@
 package com.scalian.checkit.service;
 
-public interface IEvaluation {
+public interface IRole {
 }
