@@ -31,7 +31,7 @@ public class TestMapping {
         }
         testBO.setQuestions(questionBOList);
 
-        // Map Evaluations
+/*        // Map Evaluations
         List<EvaluationBO> evaluationBOList = new ArrayList<>();
         List<EvaluationEntity> evaluationEntities = testEntity.getEvaluations();
         if(evaluationEntities != null) {
@@ -40,9 +40,9 @@ public class TestMapping {
                 evaluationBOList.add(evaluationBO);
             }
         }
-        testBO.setEvaluations(evaluationBOList);
+        testBO.setEvaluations(evaluationBOList);*/
 
-        // Map TestResults
+/*        // Map TestResults
         List<TestResultBO> testResultBOList = new ArrayList<>();
         List<TestResultEntity> testResultEntities = testEntity.getTestResults();
         if(testResultEntities != null) {
@@ -51,7 +51,7 @@ public class TestMapping {
                 testResultBOList.add(testResultBO);
             }
         }
-        testBO.setTestResults(testResultBOList);
+        testBO.setTestResults(testResultBOList);*/
 
         return testBO;
     }
@@ -79,7 +79,7 @@ public class TestMapping {
         }
         testEntity.setQuestions(questionEntities);
 
-        // Map Evaluations
+/*        // Map Evaluations
         List<EvaluationEntity> evaluationEntities = new ArrayList<>();
         List<EvaluationBO> evaluationBOList = testBO.getEvaluations();
         if(evaluationBOList != null) {
@@ -88,9 +88,9 @@ public class TestMapping {
                 evaluationEntities.add(evaluationEntity);
             }
         }
-        testEntity.setEvaluations(evaluationEntities);
+        testEntity.setEvaluations(evaluationEntities);*/
 
-        // Map TestResults
+/*        // Map TestResults
         List<TestResultEntity> testResultEntities = new ArrayList<>();
         List<TestResultBO> testResultBOList = testBO.getTestResults();
         if(testResultBOList != null) {
@@ -99,7 +99,7 @@ public class TestMapping {
                 testResultEntities.add(testResultEntity);
             }
         }
-        testEntity.setTestResults(testResultEntities);
+        testEntity.setTestResults(testResultEntities);*/
 
         return testEntity;
     }

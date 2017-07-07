@@ -41,7 +41,7 @@ public class UserEntity implements Serializable {
 	private Integer userProjects;
 
 	//bi-directional many-to-one association to ResultEvaluationEntity
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", fetch=FetchType.EAGER)
 	private List<ResultEvaluationEntity> resultEvaluations;
 
 	//bi-directional many-to-one association to RoleEntity

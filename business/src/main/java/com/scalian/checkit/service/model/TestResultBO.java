@@ -7,6 +7,8 @@ public class TestResultBO {
     private Integer testResultId;
     private Integer testResultScore;
     private Integer testResultTime;
+    private Integer resultEvaluationId;
+
     private ResultEvaluationBO resultEvaluation;
     private TestBO test;
     private List<UserResponseBO> userResponses;
@@ -34,6 +36,14 @@ public class TestResultBO {
 
     public void setTestResultTime(Integer testResultTime) {
         this.testResultTime = testResultTime;
+    }
+
+    public Integer getResultEvaluationId() {
+        return resultEvaluationId;
+    }
+
+    public void setResultEvaluationId(Integer resultEvaluationId) {
+        this.resultEvaluationId = resultEvaluationId;
     }
 
     public ResultEvaluationBO getResultEvaluation() {

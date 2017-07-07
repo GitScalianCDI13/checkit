@@ -37,8 +37,7 @@ public class TestResultMapping {
 
 
         // Map des ResultEvaluationToBO
-        ResultEvaluationBO resultEvaluationBO = ResultEvaluationMapping.mapResultEvaluationEntityToBO(testResultEntity.getResultEvaluation());
-        testResultBO.setResultEvaluation(resultEvaluationBO);
+        testResultBO.setResultEvaluationId(testResultEntity.getResultEvaluation().getResultEvaluationId());
 
         return testResultBO;
     }
@@ -65,9 +64,9 @@ public class TestResultMapping {
         TestEntity testEntity = TestMapping.mapTestBOToEntity(testResultBO.getTest());
         testResultEntity.setTest(testEntity);
 
-
         // Map des ResultEvaluationBOToEntity
-        ResultEvaluationEntity resultEvaluationEntity = ResultEvaluationMapping.mapEvaluationBOToEntity(testResultBO.getResultEvaluation());
+        ResultEvaluationEntity resultEvaluationEntity = new ResultEvaluationEntity();
+        resultEvaluationEntity.setResultEvaluationId(testResultBO.getResultEvaluationId());
         testResultEntity.setResultEvaluation(resultEvaluationEntity);
 
         return testResultEntity;

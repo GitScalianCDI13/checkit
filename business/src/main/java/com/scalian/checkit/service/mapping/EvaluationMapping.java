@@ -49,7 +49,7 @@ public class EvaluationMapping {
         evaluationEntity.setEvaluationJob(evaluationBO.getEvaluationJob());
         evaluationEntity.setEvaluationLabel(evaluationBO.getEvaluationLabel());
 
-        // Map des ResultEvaluationBO
+/*        // Map des ResultEvaluationBO
         List<ResultEvaluationEntity> resultEvaluationEntities = new ArrayList<>();
         List<ResultEvaluationBO> resultEvaluationBOList = evaluationBO.getResultEvaluations();
         if(resultEvaluationBOList != null) {
@@ -58,7 +58,7 @@ public class EvaluationMapping {
                 resultEvaluationEntities.add(resultEvaluationEntity);
             }
         }
-        evaluationEntity.setResultEvaluations(resultEvaluationEntities);
+        evaluationEntity.setResultEvaluations(resultEvaluationEntities);*/
 
         // Map des TestEntity
         List<TestEntity> testEntities = new ArrayList<>();

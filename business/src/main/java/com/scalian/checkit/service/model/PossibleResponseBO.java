@@ -7,6 +7,8 @@ public class PossibleResponseBO {
     private Integer possibleResponseId;
     private Boolean possibleResponseChecked;
     private String possibleResponseLabel;
+    private Integer questionId;
+
     private QuestionBO question;
     private List<UserResponseBO> userResponses;
 
@@ -32,6 +34,14 @@ public class PossibleResponseBO {
 
     public void setPossibleResponseLabel(String possibleResponseLabel) {
         this.possibleResponseLabel = possibleResponseLabel;
+    }
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 
     public QuestionBO getQuestion() {

@@ -18,9 +18,8 @@ public class UserResponseMapping {
         QuestionBO questionBO = QuestionMapping.mapQuestionEntityToBO(userResponseEntity.getQuestion());
         userResponseBO.setQuestion(questionBO);
 
-        // Map TestResult
-        TestResultBO testResultBO = TestResultMapping.mapTestResultEntityToBO(userResponseEntity.getTestResult());
-        userResponseBO.setTestResult(testResultBO);
+        // TestResult
+        userResponseBO.setTestResultId(userResponseEntity.getTestResult().getTestResultId());
 
         // Map User
         UserBO userBO = UserMapping.mapUserEntityToBO(userResponseEntity.getUser());
@@ -42,8 +41,9 @@ public class UserResponseMapping {
         QuestionEntity questionEntity = QuestionMapping.mapQuestionBOToEntity(userResponseBO.getQuestion());
         userResponseEntity.setQuestion(questionEntity);
 
-        // Map TestResult
-        TestResultEntity testResultEntity = TestResultMapping.mapTestResultBOToEntity(userResponseBO.getTestResult());
+        // TestResult
+        TestResultEntity testResultEntity = new TestResultEntity();
+        testResultEntity.setTestResultId(userResponseBO.getTestResultId());
         userResponseEntity.setTestResult(testResultEntity);
 
         // Map User

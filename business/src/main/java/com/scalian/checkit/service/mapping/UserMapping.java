@@ -2,10 +2,8 @@ package com.scalian.checkit.service.mapping;
 
 import com.scalian.checkit.model.ResultEvaluationEntity;
 import com.scalian.checkit.model.UserEntity;
-import com.scalian.checkit.model.UserResponseEntity;
 import com.scalian.checkit.service.model.ResultEvaluationBO;
 import com.scalian.checkit.service.model.UserBO;
-import com.scalian.checkit.service.model.UserResponseBO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,7 @@ public class UserMapping {
         userBO.setUserProjects(userEntity.getUserProjects());
         userBO.setUserPassword(userEntity.getUserPassword());
 
-        // Map des ResultEvaluationEntityToBO
+/*        // Map des ResultEvaluationEntityToBO
         List<ResultEvaluationBO> resultEvaluationBOList = new ArrayList<>();
         List<ResultEvaluationEntity> resultEvaluationEntities = userEntity.getResultEvaluations();
         if(resultEvaluationEntities != null) {
@@ -32,18 +30,7 @@ public class UserMapping {
                 resultEvaluationBOList.add(resultEvaluationBO);
             }
         }
-        userBO.setResultEvaluations(resultEvaluationBOList);
-
-        // Map des UserResponseToBO
-        List<UserResponseBO> userResponseBOList = new ArrayList<>();
-        List<UserResponseEntity> userResponseEntities = userEntity.getUserResponses();
-        if(userResponseEntities != null) {
-            for (UserResponseEntity userResponseEntity : userResponseEntities) {
-                UserResponseBO userResponseBO = UserResponseMapping.mapUserResponseEntityToBO(userResponseEntity);
-                userResponseBOList.add(userResponseBO);
-            }
-        }
-        userBO.setUserResponses(userResponseBOList);
+        userBO.setResultEvaluations(resultEvaluationBOList);*/
 
         return userBO;
     }
@@ -71,18 +58,6 @@ public class UserMapping {
             }
         }
         userEntity.setResultEvaluations(resultEvaluationEntityList);
-
-        // Map des UserResponseBOToEntity
-        List<UserResponseEntity> userResponseEntityList = new ArrayList<>();
-        List<UserResponseBO> userResponseBOList = userBO.getUserResponses();
-        if(userResponseBOList != null) {
-            for (UserResponseBO userResponseBO : userResponseBOList) {
-                UserResponseEntity userResponseEntity = UserResponseMapping.mapUserResponseBOToEntity(userResponseBO);
-                userResponseEntityList.add(userResponseEntity);
-            }
-        }
-        userEntity.setUserResponses(userResponseEntityList);
-
 
         return userEntity;
     }

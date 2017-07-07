@@ -3,6 +3,8 @@ package com.scalian.checkit.service.model;
 public class UserResponseBO {
 
     private Integer userResponseId;
+    private Integer testResultId;
+
     private PossibleResponseBO possibleResponse;
     private QuestionBO question;
     private TestResultBO testResult;
@@ -14,6 +16,14 @@ public class UserResponseBO {
 
     public void setUserResponseId(Integer userResponseId) {
         this.userResponseId = userResponseId;
+    }
+
+    public Integer getTestResultId() {
+        return testResultId;
+    }
+
+    public void setTestResultId(Integer testResultId) {
+        this.testResultId = testResultId;
     }
 
     public PossibleResponseBO getPossibleResponse() {

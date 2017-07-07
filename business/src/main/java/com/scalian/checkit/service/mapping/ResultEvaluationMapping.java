@@ -21,12 +21,10 @@ public class ResultEvaluationMapping {
         resultEvaluationBO.setResultEvaluationScore(resultEvaluationEntity.getResultEvaluationScore());
 
         // Map User
-        UserBO userBO = UserMapping.mapUserEntityToBO(resultEvaluationEntity.getUser());
-        resultEvaluationBO.setUser(userBO);
+        resultEvaluationBO.setUser(UserMapping.mapUserEntityToBO(resultEvaluationEntity.getUser()));
 
         // Map Evaluation
-        EvaluationBO evaluationBO = EvaluationMapping.mapEvaluationEntityToBO(resultEvaluationEntity.getEvaluation());
-        resultEvaluationBO.setEvaluation(evaluationBO);
+        resultEvaluationBO.setEvaluation(EvaluationMapping.mapEvaluationEntityToBO(resultEvaluationEntity.getEvaluation()));
 
         // Map TestResult
         List<TestResultBO> testResultBOList = new ArrayList<>();
@@ -49,12 +47,10 @@ public class ResultEvaluationMapping {
         resultEvaluationEntity.setResultEvaluationScore(resultEvaluationBO.getResultEvaluationScore());
 
         // Map User
-        UserEntity userEntity = UserMapping.mapUserBOToEntity(resultEvaluationBO.getUser());
-        resultEvaluationEntity.setUser(userEntity);
+        resultEvaluationEntity.setUser(UserMapping.mapUserBOToEntity(resultEvaluationBO.getUser()));
 
-        // Map Evaluation
-        EvaluationEntity evaluationEntity = EvaluationMapping.mapEvaluationBOToEntity(resultEvaluationBO.getEvaluation());
-        resultEvaluationEntity.setEvaluation(evaluationEntity);
+        // Evaluation
+        resultEvaluationEntity.setEvaluation(EvaluationMapping.mapEvaluationBOToEntity(resultEvaluationBO.getEvaluation()));
 
         // Map TestResults
         List<TestResultEntity> testResultEntities = new ArrayList<>();

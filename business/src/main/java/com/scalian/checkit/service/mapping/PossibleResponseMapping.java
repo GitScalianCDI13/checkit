@@ -18,12 +18,9 @@ public class PossibleResponseMapping {
         possibleResponseBO.setPossibleResponseId(possibleResponseEntity.getPossibleResponseId());
         possibleResponseBO.setPossibleResponseChecked(possibleResponseEntity.getPossibleResponseChecked());
         possibleResponseBO.setPossibleResponseLabel(possibleResponseEntity.getPossibleResponseLabel());
+        possibleResponseBO.setQuestionId(possibleResponseEntity.getQuestion().getQuestionId());
 
-        // Map de la question
-        QuestionBO questionBO = QuestionMapping.mapQuestionEntityToBO(possibleResponseEntity.getQuestion());
-        possibleResponseBO.setQuestion(questionBO);
-
-        // Map UserResponse
+/*        // Map UserResponse
         List<UserResponseBO> userResponseBOList = new ArrayList<>();
         List<UserResponseEntity> userResponseEntities = possibleResponseEntity.getUserResponses();
         if(userResponseEntities != null) {
@@ -32,7 +29,7 @@ public class PossibleResponseMapping {
                 userResponseBOList.add(userResponseBO);
             }
         }
-        possibleResponseBO.setUserResponses(userResponseBOList);
+        possibleResponseBO.setUserResponses(userResponseBOList);*/
 
         return possibleResponseBO;
     }
@@ -44,10 +41,11 @@ public class PossibleResponseMapping {
         possibleResponseEntity.setPossibleResponseLabel(possibleResponseBO.getPossibleResponseLabel());
 
         // Map de la question
-        QuestionEntity questionEntity = QuestionMapping.mapQuestionBOToEntity(possibleResponseBO.getQuestion());
+        QuestionEntity questionEntity = new QuestionEntity();
+        questionEntity.setQuestionId(possibleResponseBO.getQuestionId());
         possibleResponseEntity.setQuestion(questionEntity);
 
-        // Map des UserResponse
+/*        // Map des UserResponse
         List<UserResponseEntity> userResponseEntities = new ArrayList<>();
         List<UserResponseBO> userResponseBOList = possibleResponseBO.getUserResponses();
         if(userResponseBOList != null) {
@@ -56,8 +54,7 @@ public class PossibleResponseMapping {
                 userResponseEntities.add(userResponseEntity);
             }
         }
-        possibleResponseEntity.setUserResponses(userResponseEntities);
-
+        possibleResponseEntity.setUserResponses(userResponseEntities);*/
 
         return possibleResponseEntity;
     }

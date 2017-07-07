@@ -20,7 +20,7 @@ public class QuestionMapping {
         ThemeBO themeBO = ThemeMapping.mapThemeEntityToBO(questionEntity.getTheme());
         questionBO.setTheme(themeBO);
 
-        // Map des Tests
+/*        // Map des Tests
         List<TestBO> testBOList = new ArrayList<>();
         List<TestEntity> testEntities = questionEntity.getTests();
         if(testEntities != null) {
@@ -29,9 +29,9 @@ public class QuestionMapping {
                 testBOList.add(testBO);
             }
         }
-        questionBO.setTests(testBOList);
+        questionBO.setTests(testBOList);*/
 
-        // Map des UserResponse
+/*        // Map des UserResponse
         List<UserResponseBO> userResponseBOList = new ArrayList<>();
         List<UserResponseEntity> userResponseEntities = questionEntity.getUserResponses();
         if(userResponseEntities != null) {
@@ -40,7 +40,7 @@ public class QuestionMapping {
                 userResponseBOList.add(userResponseBO);
             }
         }
-        questionBO.setUserResponses(userResponseBOList);
+        questionBO.setUserResponses(userResponseBOList);*/
 
         // Map des PossibleResponse
         List<PossibleResponseBO> possibleResponseBOList = new ArrayList<>();
@@ -67,7 +67,7 @@ public class QuestionMapping {
         ThemeEntity themeEntity = ThemeMapping.mapThemeBOToEntity(questionBO.getTheme());
         questionEntity.setTheme(themeEntity);
 
-        // Map des Test
+/*        // Map des Test
         List<TestEntity> testEntities = new ArrayList<>();
         List<TestBO> testBOList = questionBO.getTests();
         if(testBOList != null) {
@@ -76,9 +76,9 @@ public class QuestionMapping {
                 testEntities.add(testEntity);
             }
         }
-        questionEntity.setTests(testEntities);
+        questionEntity.setTests(testEntities);*/
 
-        // Map des UserResponse
+/*        // Map des UserResponse
         List<UserResponseEntity> userResponseEntities = new ArrayList<>();
         List<UserResponseBO> userResponseBOList = questionBO.getUserResponses();
         if(userResponseBOList != null) {
@@ -87,7 +87,7 @@ public class QuestionMapping {
                 userResponseEntities.add(userResponseEntity);
             }
         }
-        questionEntity.setUserResponses(userResponseEntities);
+        questionEntity.setUserResponses(userResponseEntities);*/
 
         // Map PossibleResponse
         List<PossibleResponseEntity> possibleResponseEntities = new ArrayList<>();

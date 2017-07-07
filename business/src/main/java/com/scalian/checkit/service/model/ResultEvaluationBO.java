@@ -7,6 +7,7 @@ public class ResultEvaluationBO {
     private Integer resultEvaluationId;
     private Integer resultEvaluationTime;
     private Integer resultEvaluationScore;
+
     private EvaluationBO evaluation;
     private UserBO user;
     private List<TestResultBO> testResults;

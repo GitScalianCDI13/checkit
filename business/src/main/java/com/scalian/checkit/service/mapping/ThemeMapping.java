@@ -17,7 +17,7 @@ public class ThemeMapping {
         themeBO.setThemeId(themeEntity.getThemeId());
         themeBO.setThemeLabel(themeEntity.getThemeLabel());
 
-
+        /* Comment because not used
         // Map des QuestionEntityToBO
         List<QuestionBO> questionBOList = new ArrayList<>();
         List<QuestionEntity> questionEntityList = themeEntity.getQuestions();
@@ -40,7 +40,7 @@ public class ThemeMapping {
             }
         }
         themeBO.setTests(testBOList);
-
+        */
 
         return themeBO;
     }
@@ -51,6 +51,7 @@ public class ThemeMapping {
         themeEntity.setThemeId(themeBO.getThemeId());
         themeEntity.setThemeLabel(themeBO.getThemeLabel());
 
+        /* Comment because not used
         // Map des QuestionBOToEntity
         List<QuestionEntity> questionEntityList = new ArrayList<>();
         List<QuestionBO> questionBOList = themeBO.getQuestions();
@@ -72,7 +73,7 @@ public class ThemeMapping {
                 testEntityList.add(testEntity);
             }
         }
-        themeEntity.setTests(testEntityList);
+        themeEntity.setTests(testEntityList);*/
 
 
         return themeEntity;
